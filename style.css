@@ -419,4 +419,199 @@ body {
   );
 }
 
+.team-section {
+  background: #000;
+  color: #fff;
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.team-title {
+  font-size: 40px;
+  margin-bottom: 60px;
+  letter-spacing: 2px;
+}
+
+.team-slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.team-card {
+  width: 500px;
+  min-height: 250px;
+  border: 1px solid #fff;
+  padding: 40px;
+  transition: all 0.5s ease;
+}
+
+.team-card h3 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.role {
+  font-size: 16px;
+  opacity: 0.7;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+.linkedin img {
+  width: 24px;
+  filter: invert(1);
+  transition: 0.3s;
+}
+
+.linkedin img:hover {
+  transform: scale(1.2);
+}
+
+.team-section {
+  position: relative;
+  background: #1f1f1f;
+  color: #fff;
+  padding: 160px 0;
+  overflow: hidden;
+}
+
+.team-section .linkedin-icon {
+  fill: #eae5e5;   /* soft black */
+}
+
+
+/* WebGL canvas */
+#shaderCanvas {
+  position: absolute;
+  inset: 1;
+  z-index: 0;
+}
+
+/* Parallax text layers */
+.parallax-layer {
+  position: absolute;
+  font-size: 200px;
+  font-weight: 900;
+  opacity: 0.03;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.layer-back {
+  top: 30%;
+  left: 10%;
+}
+
+.layer-front {
+  top: 55%;
+  left: 20%;
+}
+
+.team-title {
+  text-align: center;
+  font-size: 44px;
+  margin-bottom: 78px;
+  position: relative;
+  z-index: 1;
+}
+
+.team-slider {
+  display: flex;
+  gap: 50px;
+  overflow-x: auto;
+  padding: 40px 80px;   /* important fix */
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  position: relative;
+  z-index: 1;
+}
+
+.team-slider::-webkit-scrollbar {
+  height: 4px;
+}
+
+.team-slider::-webkit-scrollbar-thumb {
+  background: #1d1d1d;
+}
+
+.team-card {
+  min-width: 250px;
+  flex: 0 0 auto;
+  padding: 32px;
+  border: 1px solid #211f1f;
+  scroll-snap-align: center;
+  cursor: pointer;
+  transition: transform 0.4s ease, background 0.4s ease;
+  background: rgba(31, 31, 31, 0.6);
+}
+
+.team-card:hover {
+  background: #333232;
+  color: #0a0909;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  overflow: hidden;
+}
+
+.modal.active {
+  display: flex;
+}
+
+/* Background Video */
+.modal-video {
+  position: absolute;
+  width: 100%;
+  height: 85%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Dark overlay for readability */
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+  z-index: 1;
+}
+
+/* Glass Card */
+.modal-content {
+  position: relative;
+  z-index: 2;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 50px;
+  max-width: 600px;
+  color: #fff;
+  border-radius: 16px;
+  animation: fadeIn 0.4s ease;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
 
