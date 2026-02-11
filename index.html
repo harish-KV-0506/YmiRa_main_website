@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head favicon="assets/logo.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/x-icon" href="assets/logo.png" />
+  <link rel="stylesheet" href="style.css"/>
+</head>
+
+
+<body>
+
+  <header class="site-header" id="header">
+  <div class="header-bg"></div>
+
+  <div class="top-bar" id="topBar">
+    <div class="brand" id="brand">
+      <img src="assets/logo.png" alt="YMIRA Logo" class="brand-logo" id="logo">
+      <span class="brand-name">YMIRA</span>
+    </div>
+
+    <nav class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#mission">Mission</a>
+      <a href="#projects">Projects</a>
+      <a href="#blog">Insights</a>
+      <a href="#chat">YMIRA Chat</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+
+  <div class="header-text">
+    <h1>Awareness. Prevention. Technology.</h1>
+    <p>Building meaningful digital solutions.</p>
+  </div>
+</header>
+
+
+
+
+  <section id="home" class="hero">
+  <img src="assets/bg1.jpg" alt="Background image" class="hero-bg">
+
+  <div class="hero-content">
+    <h1>Building Awareness. Prevention. Technology.</h1>
+    <p>Minimal ideas. Maximum impact.</p>
+  </div>
+</section>
+
+
+<section class="video-section">
+  <video autoplay muted loop playsinline>
+    <source src="assets/video/background.mp4" type="video/mp4">
+  </video>
+
+  <div class="video-overlay">
+    <h1>Awareness. Prevention. Technology.</h1>
+    <p>Building solutions that matter.</p>
+  </div>
+</section>
+
+  <section id="mission" class="section">
+    <h2>What We Stand For</h2>
+    <p>
+      YMIRA is focused on spreading awareness, preventing future risks,
+      and building technology-driven solutions for real-world problems.
+    </p>
+  </section>
+
+  <section id="projects" class="section dark">
+  <h2>Projects</h2>
+  <div class="cards" id="projectsContainer">
+    <!-- Cards will be injected dynamically -->
+  </div>
+</section>
+
+<script>
+  const projects = [
+    {
+      name: "BlinkBreak",
+      description: "Daily awareness content",
+      image: "assets/logo.png"
+    },
+    {
+      name: "YMIRA",
+      description: "Tech & education initiatives",
+      image: "assets/logo.png"
+    },
+    {
+      name: "Baby Store",
+      description: "Carefully curated baby products",
+      image: "assets/logo.png"
+    }
+  ];
+
+  const container = document.getElementById("projectsContainer");
+
+  projects.forEach(project => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <img src="${project.image}" alt="${project.name}" />
+      <h3>${project.name}</h3>
+      <span>${project.description}</span>
+    `;
+
+    container.appendChild(card);
+  });
+</script>
+
+
+ <section id="blog" class="section">
+  <h2>Insights / Blog</h2>
+  <p class="section-subtitle">
+    Weekly insights on health, students, and technology.
+  </p>
+
+  <div class="blog-grid" id="blogContainer">
+    <!-- Blog posts injected dynamically -->
+  </div>
+
+  <a href="blog.html" class="blog-link">View all articles →</a>
+</section>
+
+<script>
+  const blogs = [
+    {
+      title: "Why Health Awareness Matters in Daily Life",
+      category: "Health",
+      date: "Feb 2026"
+    },
+    {
+      title: "How Students Can Learn Faster Using Technology",
+      category: "Students",
+      date: "Feb 2026"
+    },
+    {
+      title: "AI Explained: Simple Guide for Beginners",
+      category: "Technology",
+      date: "Jan 2026"
+    }
+  ];
+
+  const blogContainer = document.getElementById("blogContainer");
+
+  blogs.forEach(blog => {
+    const card = document.createElement("div");
+    card.className = "blog-card";
+
+    card.innerHTML = `
+      <span class="blog-category">${blog.category}</span>
+      <h3>${blog.title}</h3>
+      <span class="blog-date">${blog.date}</span>
+    `;
+
+    blogContainer.appendChild(card);
+  });
+</script>
+
+
+  <section id="chat" class="section dark">
+    <h2>YMIRA Chat</h2>
+    <p>Embedded AI chatbot coming soon.</p>
+    <div class="chatbox">Talk to our AI assistant <b>Volfelxim Berg</b></div>
+  </section>
+
+  <section id="contact" class="section contact-section">
+  <h2>Contact / Collaborate</h2>
+  <p class="contact-subtitle">
+    Have an idea, collaboration, or feedback? Let’s build something meaningful.
+  </p>
+
+  <form id="contactForm" class="contact-form">
+    <input type="text" id="name" placeholder="Your name" required>
+    <input type="email" id="email" placeholder="Your email" required>
+    <textarea id="message" placeholder="Your message" rows="4" required></textarea>
+
+    <button type="submit">Send Message</button>
+    <p class="form-status" id="formStatus"></p>
+  </form>
+</section>
+
+<script>
+  const form = document.getElementById("contactForm");
+  const statusText = document.getElementById("formStatus");
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const data = {
+      name: name.value,
+      email: email.value,
+      message: message.value,
+      time: new Date().toISOString()
+    };
+
+    let messages = JSON.parse(localStorage.getItem("ymiraMessages")) || [];
+    messages.push(data);
+    localStorage.setItem("ymiraMessages", JSON.stringify(messages));
+
+    statusText.textContent = "Message saved. We’ll get back to you soon.";
+    form.reset();
+  });
+</script>
+
+
+<section class="section dark" id="game">
+  <h2>Play & Learn</h2>
+  <p>Quick awareness game. Works offline.</p>
+
+  <div class="game-box">
+    <p id="gameQuestion">Is drinking enough water important?</p>
+    <button onclick="answer(true)">Yes</button>
+    <button onclick="answer(false)">No</button>
+    <p id="gameResult"></p>
+  </div>
+</section>
+
+
+  <script>
+  const questions = [
+    { q: "Is drinking enough water important?", a: true },
+    { q: "Is skipping sleep healthy?", a: false },
+    { q: "Does regular exercise help mental health?", a: true }
+  ];
+
+  let index = 0;
+
+  function answer(userAnswer) {
+    const result = document.getElementById("gameResult");
+
+    if (questions[index].a === userAnswer) {
+      result.textContent = "Correct ✔";
+    } else {
+      result.textContent = "Incorrect ✖";
+    }
+
+    index = (index + 1) % questions.length;
+    document.getElementById("gameQuestion").textContent = questions[index].q;
+  }
+</script>
+
+
+
+  <footer class="footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      © 2026 YMIRA
+    </div>
+
+    <div class="social-links">
+      <a href="https://youtube.com/@Blinkbreaktamil" target="_blank" aria-label="BlinkBreak Tamil YouTube">
+        <img src="assets/social/youtube.svg" alt="YouTube">
+      </a>
+
+      <a href="https://youtube.com/@Blinkbreakenglish" target="_blank" aria-label="BlinkBreak English YouTube">
+        <img src="assets/social/youtube.svg" alt="YouTube">
+      </a>
+
+      <a href="https://instagram.com/ymira-org-1b16a337a" target="_blank" aria-label="YMIRA Instagram">
+        <img src="assets/social/instagram.svg" alt="Instagram">
+      </a>
+
+      <a href="https://twitter.com/ymiraorg" target="_blank" aria-label="YMIRA X">
+        <img src="assets/social/x.svg" alt="X">
+      </a>
+
+      <a href="https://www.linkedin.com/in/ymira-org-1b16a337a/" target="_blank" aria-label="YMIRA LinkedIn">
+        <img src="assets/social/linkedin.svg" alt="LinkedIn">
+      </a>
+    </div>
+  </div>
+</footer>
+<script>
+  const logo = document.querySelector(".brand-logo");
+
+  window.addEventListener("scroll", () => {
+    const y = window.scrollY;
+    const scale = Math.min(2.2, 1 + y / 350);
+    logo.style.transform = `scale(${scale})`;
+  });
+</script>
+</body>
+</html>
