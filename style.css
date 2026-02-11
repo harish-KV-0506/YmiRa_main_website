@@ -432,11 +432,17 @@ body {
   letter-spacing: 2px;
 }
 
-.team-slider {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+@media (max-width: 768px) {
+  .team-slider {
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  .team-card {
+    min-width: 100%;
+  }
 }
+
 
 .team-card {
   width: 500px;
@@ -615,3 +621,68 @@ body {
   to { opacity: 1; transform: scale(1); }
 }
 
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+
+  .team-title {
+    font-size: 36px;
+  }
+
+  .team-slider {
+    padding: 40px;
+    gap: 30px;
+  }
+
+  .team-card {
+    min-width: 220px;
+    padding: 24px;
+  }
+
+  .parallax-layer {
+    font-size: 120px;
+  }
+
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+  .team-section {
+    padding: 100px 0;
+  }
+
+  .team-title {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+
+  .team-slider {
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .team-card {
+    min-width: 85%;
+    padding: 20px;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 30px;
+  }
+
+  .parallax-layer {
+    font-size: 60px;
+    opacity: 0.02;
+  }
+
+}
+
+.team-slider {
+  -webkit-overflow-scrolling: touch;
+}
