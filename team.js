@@ -34,7 +34,8 @@ If you’re looking for something real — welcome.`,
   { name: "Arjun J S", role: "Head of Operations", desc: "Accurate and reliable executor. I am a dedicated and goal-oriented young professional who believes in continuous learning and self-improvement. I have strong analytical skills with a keen interest in accounting, aptitude, and cloud technologies. I manage my time effectively and always strive to improve my communication and professional skills. I am passionate about contributing to meaningful work, especially initiatives that help others and support green actions. I am self-aware, confident, and committed to growing into a responsible and impactful professional.", linkedin: "https://www.linkedin.com/in/arjun-js-a792b42a3?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" },
   { name: "Hariprakash R", role: "Technical Lead", desc: "Driven to grow and build. I am Hariprakash.I’m passionate about technology and always eager to learn new things in the field of software development and design.", linkedin: "https://www.linkedin.com/in/hariprakash-r-4672b42a3?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" },
   { name: "Praveen P", role: "Head of Media Production", desc: "Calm, observant, detail-focused.", linkedin: "https://www.linkedin.com/in/praveen-parankunran-3194302a3?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" },
- // { name: "Thomas Livingston", role: "Head of Innovation & AI Systems", desc: "Passionate about meaningful software.", linkedin: "#" }
+  { name: "Gowtham R", role: "Head of Innovation & AI Systems", desc: "Passionate about meaningful software.", linkedin: "#" }
+   // { name: "Thomas Livingston", role: "Head of Innovation & AI Systems", desc: "Passionate about meaningful software.", linkedin: "#" }
  // { name: "Gowtham R", role: "Head of Innovation & AI Systems", desc: "Passionate about meaningful software.", linkedin: "#" }
    
    
@@ -206,4 +207,5 @@ if (canvas) {
 }
 
 });
+
 
