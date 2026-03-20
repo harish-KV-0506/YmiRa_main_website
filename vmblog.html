@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hello World | YMIRA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #030303;
+    --text-main: #ffffff;
+    --text-muted: #888888;
+    --accent-1: #00e5ff; /* Tech Cyan */
+    --accent-2: #b300ff; /* Soul Purple */
+    --card-bg: rgba(255, 255, 255, 0.02);
+    --border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    cursor: none; /* Hide default cursor for custom one */
+}
+
+body {
+    background: var(--bg);
+    color: var(--text-main);
+    line-height: 1.8;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+/* --- READING PROGRESS BAR --- */
+#progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+    width: 0%;
+    z-index: 9999;
+    box-shadow: 0 0 10px var(--accent-1);
+}
+
+/* --- CUSTOM CURSOR --- */
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+}
+.cursor-outline {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background 0.2s;
+}
+
+/* --- AMBIENT BACKGROUND MAGIC --- */
+.ambient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: -1;
+    animation: float 10s infinite alternate ease-in-out;
+    opacity: 0.4;
+}
+.orb-1 {
+    width: 400px; height: 400px;
+    background: var(--accent-1);
+    top: -100px; left: -100px;
+}
+.orb-2 {
+    width: 300px; height: 300px;
+    background: var(--accent-2);
+    top: 40vh; right: -50px;
+    animation-delay: -5s;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(50px, 50px) scale(1.2); }
+}
+
+/* --- HERO --- */
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 10%;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    z-index: 2;
+}
+
+/* Typing Effect */
+.typewriter {
+    font-family: 'Fira Code', monospace;
+    background: linear-gradient(90deg, var(--accent-1), #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.cursor-blink {
+    animation: blink 1s step-end infinite;
+    color: var(--accent-1);
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+.hero h2 {
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    font-weight: 300;
+    color: var(--text-muted);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUpReveal 1s 1.5s forwards ease-out;
+    z-index: 2;
+}
+
+/* --- CONTENT CONTAINER --- */
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 80px 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.section {
+    margin-bottom: 80px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section h3 {
+    font-size: 32px;
+    margin-bottom: 25px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #fff, #aaa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.section p {
+    font-size: 1.1rem;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+/* --- INTERACTIVE PILLARS GRID (SPOTLIGHT EFFECT) --- */
+.pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.pillar {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 35px 25px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+/* The Magic Glow that follows the mouse */
+.pillar::before {
+    content: "";
+    position: absolute;
+    top: var(--y);
+    left: var(--x);
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.pillar:hover::before {
+    opacity: 1;
+}
+
+.pillar:hover {
+    border-color: rgba(255,255,255,0.4);
+    transform: translateY(-5px);
+}
+
+.pillar h4 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.pillar p { font-size: 0.95rem; margin: 0; }
+
+/* --- TERMINAL QUOTE STYLE --- */
+.highlight {
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+    margin: 40px 0;
+    padding: 25px 30px;
+    background: rgba(0, 229, 255, 0.03);
+    border-left: 3px solid var(--accent-1);
+    border-radius: 0 12px 12px 0;
+    font-family: 'Fira Code', monospace;
+    position: relative;
+    box-shadow: inset 20px 0 50px rgba(0, 229, 255, 0.02);
+}
+
+.highlight::before {
+    content: ">_";
+    color: var(--accent-1);
+    margin-right: 15px;
+    font-weight: 800;
+}
+
+/* --- FOOTER CTA --- */
+.cta {
+    text-align: center;
+    padding: 100px 20px;
+    background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.02));
+    border-top: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta h2 {
+    font-size: 40px;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.cta p {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+}
+
+.btn-magic {
+    display: inline-block;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #000;
+    background: #fff;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: 0.4s;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.btn-magic::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+    z-index: -1;
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.btn-magic:hover {
+    color: #fff;
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.4);
+    transform: scale(1.05);
+}
+
+.btn-magic:hover::after { opacity: 1; }
+
+/* ANIMATIONS */
+@keyframes fadeUpReveal {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media(max-width:768px){
+    * { cursor: auto; } /* Disable custom cursor on mobile */
+    .cursor-dot, .cursor-outline { display: none; }
+    .hero h1 { font-size: 2.5rem; }
+    .pillar:hover { transform: none; } /* Simplify on mobile */
+}
+</style>
+</head>
+
+<body>
+
+<!-- Progress Bar -->
+<div id="progress-bar"></div>
+
+<!-- Custom Cursor -->
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-outline" id="cursor-outline"></div>
+
+<!-- Ambient Background -->
+<div class="ambient-orb orb-1"></div>
+<div class="ambient-orb orb-2"></div>
+
+<section class="hero">
+    <h1>
+        <span class="typewriter" id="type-text"></span><span class="cursor-blink">_</span><br>
+        Why We’re Rewriting the Code of Business
+    </h1>
+    <h2>Where Strategy Meets Soul, and Tech Meets Play.</h2>
+</section>
+
+<div class="container">
+
+<div class="section">
+    <p><strong>The "Hello World" moment.</strong><br>
+    In the tech world, it’s the first thing a computer program says to the universe. It signifies life. It signifies that the system is ready.</p>
+
+    <p>Today, YmiRa is saying it. But we aren’t just another software company launching another tool. We are here to challenge a very old, very boring assumption: that <strong>"Business" and "Creativity" are opposites.</strong></p>
+
+    <div class="highlight">We say: Why not both?</div>
+</div>
+
+<div class="section">
+    <h3>The Source Code of YmiRa</h3>
+    <p>We love clean code. Sharp strategy. Measurable growth. But we believe the biggest breakthroughs don’t happen in sterile boardrooms — they happen when precision meets imagination.</p>
+</div>
+
+<div class="section">
+    <h3>Our Four Pillars</h3>
+
+    <div class="pillars">
+        <div class="pillar card-magic">
+            <h4>1. Creativity is Our Currency</h4>
+            <p>We don’t just solve problems — we reimagine them. Every line of code, every campaign, every system must carry imagination.</p>
+        </div>
+
+        <div class="pillar card-magic">
+            <h4>2. Enhancement is the Goal</h4>
+            <p>We believe in the Upgrade. Faster. Smarter. More human. We don’t maintain systems — we evolve them.</p>
+        </div>
+
+        <div class="pillar card-magic">
+            <h4>3. Entertainment is Essential</h4>
+            <p>Software doesn’t have to be boring. Strategy doesn’t have to feel heavy. If it doesn’t inspire or delight — we redesign it.</p>
+        </div>
+
+        <div class="pillar card-magic">
+            <h4>4. The Extra-Curricular Edge</h4>
+            <p>Coders who play guitar. Strategists who hike. Analysts who paint. Your passions fuel your performance.</p>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <h3>The Vision: An Operating System for Passion</h3>
+    <p>We are building a future where technology doesn’t replace human creativity — it amplifies it.</p>
+    <p>We are building for the Builders. The Dreamers. The Doers.</p>
+</div>
+
+<div class="section">
+    <h3>What’s Next?</h3>
+    <p>This blog will be our open journal. We will share our wins, our bugs, our learnings, and the ideas shaping tomorrow.</p>
+
+    <div class="highlight">Serious Tech. Spirited People.</div>
+</div>
+
+</div>
+
+<section class="cta section">
+    <h2>Welcome to the Family</h2>
+    <p>Let’s build something incredible.</p>
+    <a href="#" class="btn-magic">Initialize Journey</a>
+</section>
+
+<script>
+    // --- 1. MAGIC TYPING EFFECT ---
+    const textToType = "Hello World";
+    const typeElement = document.getElementById('type-text');
+    let typeIndex = 0;
+
+    function typeEffect() {
+        if (typeIndex < textToType.length) {
+            typeElement.innerHTML += textToType.charAt(typeIndex);
+            typeIndex++;
+            setTimeout(typeEffect, 120); // Typing speed
+        }
+    }
+    setTimeout(typeEffect, 500); // Start delay
+
+    // --- 2. CUSTOM CURSOR MAGIC ---
+    const cursorDot = document.getElementById('cursor-dot');
+    const cursorOutline = document.getElementById('cursor-outline');
+    
+    window.addEventListener('mousemove', function(e) {
+        const posX = e.clientX;
+        const posY = e.clientY;
+
+        // Instant dot movement
+        cursorDot.style.left = `${posX}px`;
+        cursorDot.style.top = `${posY}px`;
+
+        // Smooth outline delay
+        cursorOutline.animate({
+            left: `${posX}px`,
+            top: `${posY}px`
+        }, { duration: 500, fill: "forwards" });
+    });
+
+    // Hover effect on interactable items
+    const interactables = document.querySelectorAll('a, .pillar, .highlight');
+    interactables.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            cursorOutline.style.width = '60px';
+            cursorOutline.style.height = '60px';
+            cursorOutline.style.background = 'rgba(255,255,255,0.1)';
+        });
+        item.addEventListener('mouseleave', () => {
+            cursorOutline.style.width = '40px';
+            cursorOutline.style.height = '40px';
+            cursorOutline.style.background = 'transparent';
+        });
+    });
+
+    // --- 3. SCROLL REVEAL ANIMATION ---
+    const sections = document.querySelectorAll('.section');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting){
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    sections.forEach(sec => observer.observe(sec));
+
+    // --- 4. SPOTLIGHT HOVER EFFECT ON PILLARS ---
+    const cards = document.querySelectorAll('.card-magic');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Set CSS variables for the spotlight position
+            card.style.setProperty('--x', `${x}px`);
+            card.style.setProperty('--y', `${y}px`);
+        });
+    });
+
+    // --- 5. READING PROGRESS BAR ---
+    window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercentage = (scrollTop / scrollHeight) * 100;
+        document.getElementById('progress-bar').style.width = scrollPercentage + '%';
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YmiRa Blog | Think. Build. Grow.</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+/* --- BASE & VARIABLES --- */
+:root {
+    --bg-color: #030303;
+    --surface-color: #0d0d0d;
+    --border-color: #222;
+    --text-primary: #ffffff;
+    --text-secondary: #999999;
+    --accent-glow: rgba(255, 255, 255, 0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+/* --- BRAND INTRO / PRELOADER --- */
+#brand-intro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: opacity 1s ease-in-out, visibility 1s;
+}
+
+.brand-text {
+    font-size: 4rem;
+    font-weight: 800;
+    letter-spacing: 8px;
+    background: linear-gradient(90deg, #333, #fff, #333);
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shine 2s linear infinite, scaleUp 2.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+@keyframes shine {
+    to { background-position: 200% center; }
+}
+
+@keyframes scaleUp {
+    0% { transform: scale(0.8); opacity: 0; filter: blur(10px); }
+    100% { transform: scale(1); opacity: 1; filter: blur(0); }
+}
+
+/* --- AMBIENT GLOW EFFECTS --- */
+.ambient-glow {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* --- HEADER & NAVIGATION --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 10%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(3, 3, 3, 0.7);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+
+header img {
+    height: 35px;
+    filter: brightness(0) invert(1);
+}
+
+nav {
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: 0.3s;
+    position: relative;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #fff;
+    transition: 0.3s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+/* --- LAYOUT UTILS --- */
+section {
+    padding: 100px 10%;
+    position: relative;
+}
+
+.text-center { text-align: center; }
+.mt-60 { margin-top: 60px; }
+.mb-20 { margin-bottom: 20px; }
+
+/* --- HERO --- */
+.hero {
+    text-align: center;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 25px;
+    background: linear-gradient(180deg, #fff, #777);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    max-width: 700px;
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+}
+
+/* --- BUTTONS --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 34px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 40px;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 600;
+    margin: 10px;
+    transition: all 0.4s ease;
+    background: rgba(255,255,255,0.03);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn:hover {
+    background: #fff;
+    color: #000;
+    box-shadow: 0 10px 30px rgba(255,255,255,0.15);
+    transform: translateY(-3px);
+}
+
+/* --- GRID & CARDS --- */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    padding: 40px 30px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background: var(--surface-color);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+}
+
+.card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* --- LATEST POSTS (NEW) --- */
+.blog-card {
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--surface-color);
+    transition: 0.4s;
+}
+.blog-card:hover {
+    transform: translateY(-8px);
+    border-color: #555;
+}
+.blog-img {
+    width: 100%;
+    height: 200px;
+    background: #1a1a1a;
+    object-fit: cover;
+}
+.blog-content { padding: 25px; }
+.blog-meta {
+    font-size: 0.8rem;
+    color: #777;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.blog-title {
+    font-size: 1.25rem;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+/* --- NEWSLETTER CTA --- */
+.newsletter-form {
+    display: flex;
+    max-width: 500px;
+    margin: 30px auto;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 40px;
+    overflow: hidden;
+}
+.newsletter-form input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 15px 25px;
+    color: #fff;
+    outline: none;
+}
+.newsletter-form button {
+    background: #fff;
+    color: #000;
+    border: none;
+    padding: 0 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.newsletter-form button:hover {
+    background: #ddd;
+}
+
+/* --- SCROLL ANIMATIONS --- */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease-out;
+}
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- FOOTER --- */
+footer {
+    text-align: center;
+    padding: 40px 10%;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .menu-toggle { display: block; }
+    nav {
+        position: absolute;
+        top: 75px;
+        left: 0;
+        width: 100%;
+        background: rgba(10, 10, 10, 0.95);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 0;
+        gap: 20px;
+        clip-path: circle(0% at 100% 0);
+        transition: all 0.5s ease-in-out;
+    }
+    nav.active {
+        clip-path: circle(150% at 100% 0);
+    }
+    .hero h1 { font-size: 2.5rem; }
+    section { padding: 60px 5%; }
+    .newsletter-form { flex-direction: column; border-radius: 15px; }
+    .newsletter-form button { padding: 15px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- BRAND INTRO PRELOADER -->
+<div id="brand-intro">
+    <div class="brand-text">YmiRa</div>
+    <p style="color:#666; margin-top:10px; font-size: 0.9rem; letter-spacing: 2px;">THINK. BUILD. GROW.</p>
+</div>
+
+<!-- HEADER -->
+<header>
+    <div style="font-size: 24px; font-weight: 800; letter-spacing: 1px;">YmiRa.</div>
+    <div class="menu-toggle" id="mobile-menu">☰</div>
+    <nav id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#blog">Blog</a>
+        <a href="#audience">Audience</a>
+        <a href="#mission">Mission</a>
+    </nav>
+</header>
+
+<div class="ambient-glow"></div>
+
+<!-- HERO -->
+<section class="hero reveal" id="home">
+    <h1>Welcome to the YmiRa Blog</h1>
+    <p>
+        YmiRa is a student-driven innovation platform built for those who are hungry to learn, think, and build. 
+        This blog is where curiosity meets execution.
+    </p>
+
+    <div>
+        <a href="#blog" class="btn">Explore Articles</a>
+        <a href="#community" class="btn">Join Community</a>
+    </div>
+
+    <p style="max-width:650px; margin: 40px auto 0; color:#777; font-size: 0.95rem;">
+        We focus on technology, AI, systems thinking, productivity, startup mindset, and practical learning frameworks. <br>
+        <span style="color:#fff;">YmiRa is not product-heavy. <strong>We are innovation-heavy.</strong></span>
+    </p>
+</section>
+
+<!-- LATEST POSTS (NEW) -->
+<section id="blog" class="reveal">
+    <h2 class="text-center mb-20" style="font-size: 2.2rem;">Latest Insights</h2>
+    <p class="text-center mb-20" style="color:var(--text-secondary); margin-bottom: 50px;">Deep dives into tech, strategy, and execution.</p>
+    
+    <div class="grid">
+        <!-- Post 1 -->
+        <div class="blog-card">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=600" alt="Tech" class="blog-img">
+            <div class="blog-content">
+                <div class="blog-meta">
+                    <span>AI & Systems</span>
+                    <span>5 min read</span>
+                </div>
+                <h3 class="blog-title">The Future of Systems Thinking in AI</h3>
+                <p>How breaking down complex models helps future founders build scalable platforms.</p>
+            </div>
+        </div>
+        <!-- Post 2 -->
+        <div class="blog-card">
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=600" alt="Learn" class="blog-img">
+            <div class="blog-content">
+                <div class="blog-meta">
+                    <span>Productivity</span>
+                    <span>4 min read</span>
+                </div>
+                <h3 class="blog-title">Learning Frameworks for Builders</h3>
+                <p>Moving away from passive consumption and embracing execution-driven learning.</p>
+            </div>
+        </div>
+        <!-- Post 3 -->
+        <div class="blog-card">
+            <img src="https://images.unsplash.com/photo-1553028826-f4804a6dba3b?auto=format&fit=crop&q=80&w=600" alt="Startup" class="blog-img">
+            <div class="blog-content">
+                <div class="blog-meta">
+                    <span>Startup Mindset</span>
+                    <span>7 min read</span>
+                </div>
+                <h3 class="blog-title">From Student to Innovator</h3>
+                <p>Why the best time to start building your own opportunities is right now.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AUDIENCE SECTION -->
+<section id="audience" class="reveal">
+    <h2 class="text-center" style="font-size: 2.2rem;">Built for Learners & Builders</h2>
+
+    <div class="grid mt-60">
+        <div class="card">
+            <h3>🎓 Students</h3>
+            <p>Exploring your direction with clarity and structured learning.</p>
+        </div>
+
+        <div class="card">
+            <h3>💡 Self-Learners</h3>
+            <p>Sharpening skills beyond classrooms and pushing boundaries.</p>
+        </div>
+
+        <div class="card">
+            <h3>🧠 Thinkers</h3>
+            <p>Breaking down complex systems and understanding how they work.</p>
+        </div>
+
+        <div class="card">
+            <h3>🚀 Future Founders</h3>
+            <p>Turning disciplined thinking into scalable innovation.</p>
+        </div>
+    </div>
+</section>
+
+<!-- MISSION -->
+<section id="mission" class="reveal" style="background: rgba(255,255,255,0.02); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+    <h2 class="text-center" style="font-size: 2.2rem;">Our Mission</h2>
+
+    <div class="grid mt-60">
+        <div class="card" style="background: transparent;">
+            <h3>📘 Simplify</h3>
+            <p>Make complex technology and AI concepts accessible.</p>
+        </div>
+
+        <div class="card" style="background: transparent;">
+            <h3>🔍 Strengthen Thinking</h3>
+            <p>Develop analytical and strategic problem-solving skills.</p>
+        </div>
+
+        <div class="card" style="background: transparent;">
+            <h3>🛠 Build Practically</h3>
+            <p>Promote hands-on learning over passive consumption.</p>
+        </div>
+
+        <div class="card" style="background: transparent;">
+            <h3>🌱 Grow Continuously</h3>
+            <p>Encourage consistent innovation and long-term discipline.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA / NEWSLETTER -->
+<section id="community" class="reveal text-center">
+    <h2 style="font-size: 2.5rem;">Ready to Think Bigger?</h2>
+    <p style="color:var(--text-secondary); margin:20px auto; max-width: 500px;">
+        Join a community that learns differently, thinks strategically, and builds consistently. Get our latest insights delivered weekly.
+    </p>
+    
+    <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
+        <input type="email" placeholder="Enter your email address" required>
+        <button type="submit">Subscribe</button>
+    </form>
+</section>
+
+<footer>
+    © 2026 YmiRa. Built for Innovators. All rights reserved.
+</footer>
+
+<script>
+    // --- BRAND INTRO / PRELOADER LOGIC ---
+    window.addEventListener('load', () => {
+        const preloader = document.getElementById('brand-intro');
+        // Wait 2.5 seconds for animation to finish, then fade out
+        setTimeout(() => {
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 1000);
+        }, 2500);
+    });
+
+    // --- MOBILE MENU TOGGLE ---
+    const menuToggle = document.getElementById('mobile-menu');
+    const navLinks = document.getElementById('nav-links');
+
+    menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        menuToggle.innerHTML = navLinks.classList.contains('active') ? '✕' : '☰';
+    });
+
+    // --- SCROLL REVEAL ANIMATION ---
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                // Optional: Stop observing once revealed
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        root: null,
+        threshold: 0.15 // Triggers when 15% of the element is visible
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+</script>
+
+</body>
+</html>

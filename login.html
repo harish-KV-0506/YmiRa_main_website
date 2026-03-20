@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YMIRA OS | Connected Network</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  
+  <style>
+    :root {
+      --bg-base: #030303; --bg-surface: #0f0f0f; --bg-panel: #1a1a1a;
+      --border-dim: #2a2a2a; --border-light: #444;
+      --text-main: #f0f0f0; --text-muted: #888888;
+      --accent: #ffffff; --accent-glow: rgba(255, 255, 255, 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg-base); color: var(--text-main); height: 100vh; overflow: hidden; display: flex; }
+    h1, h2, h3, .orbitron { font-family: 'Orbitron', sans-serif; letter-spacing: 1.5px; text-transform: uppercase; }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: var(--border-light); }
+
+    /* --- LOGIN SCREEN --- */
+    #loginScreen {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: radial-gradient(circle at center, #111, #000);
+      display: flex; justify-content: center; align-items: center; z-index: 1000;
+      transition: opacity 0.8s ease, visibility 0.8s;
+    }
+    .login-box {
+      width: 420px; padding: 50px 40px; background: rgba(10,10,10,0.6);
+      backdrop-filter: blur(10px); border: 1px solid var(--border-light);
+      border-radius: 8px; text-align: center; box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 20px var(--accent-glow);
+    }
+    .login-logo { margin-bottom: 20px; display: flex; justify-content: center;}
+    .login-box h1 { font-size: 24px; margin-bottom: 5px; letter-spacing: 4px; }
+    .login-box p { color: var(--text-muted); font-size: 12px; margin-bottom: 30px; letter-spacing: 2px;}
+    
+    input, select {
+      width: 100%; padding: 14px; margin-bottom: 20px;
+      background: rgba(0,0,0,0.5); border: 1px solid var(--border-dim);
+      color: var(--text-main); font-family: 'Inter'; outline: none; transition: 0.3s;
+      border-radius: 4px; text-align: center; letter-spacing: 1px;
+    }
+    input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
+    
+    button {
+      width: 100%; padding: 14px; background: var(--accent); color: var(--bg-base);
+      border: none; font-family: 'Orbitron'; font-weight: bold; cursor: pointer;
+      transition: 0.3s; text-transform: uppercase; letter-spacing: 2px; border-radius: 4px;
+    }
+    button:hover { filter: brightness(1.2); box-shadow: 0 0 20px var(--accent-glow); }
+    button.outline { background: transparent; color: var(--text-main); border: 1px solid var(--border-light); margin-top: 10px; }
+    button.outline:hover { background: rgba(255,255,255,0.05); border-color: var(--text-main); }
+    button.small { padding: 8px; font-size: 10px; width: auto; margin-left: 10px; }
+
+    /* --- LAYOUT --- */
+    #app { display: none; width: 100vw; height: 100vh; opacity: 0; transition: opacity 1s ease; }
+    
+    .sidebar {
+      width: 260px; background: var(--bg-surface); border-right: 1px solid var(--border-dim);
+      display: flex; flex-direction: column; padding: 30px 0; position: relative;
+    }
+    .brand { text-align: center; margin-bottom: 40px; }
+    .nav-item {
+      padding: 16px 30px; color: var(--text-muted); cursor: pointer;
+      transition: all 0.3s; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-item:hover, .nav-item.active { color: var(--accent); background: var(--bg-panel); border-left: 4px solid var(--accent); }
+
+    .main-content { flex: 1; padding: 40px 60px; overflow-y: auto; background: var(--bg-base); }
+    .section { display: none; animation: slideUp 0.4s ease forwards; }
+    .section.active { display: block; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .header-title { font-size: 28px; margin-bottom: 5px; color: #fff; }
+    .header-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 30px; letter-spacing: 1px; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+    .card { background: var(--bg-surface); border: 1px solid var(--border-dim); padding: 25px; border-radius: 8px; position: relative; }
+    .card h3 { font-size: 15px; margin-bottom: 15px; color: #fff; border-bottom: 1px solid var(--border-dim); padding-bottom: 10px; }
+
+    .list-item { padding: 12px 0; border-bottom: 1px solid var(--border-dim); display: flex; justify-content: space-between; font-size: 13px; align-items: center;}
+    .list-item.flex-col { flex-direction: column; align-items: flex-start; gap: 5px; }
+    .badge { padding: 4px 10px; border-radius: 4px; font-size: 10px; font-family: 'Orbitron'; background: var(--bg-panel); border: 1px solid var(--border-light); }
+
+    /* --- CHAT / COMMS --- */
+    .chat-box { height: 300px; overflow-y: auto; background: var(--bg-base); padding: 15px; border: 1px solid var(--border-dim); border-radius: 4px; margin-bottom: 15px; }
+    .msg { margin-bottom: 10px; padding: 10px; border-radius: 4px; background: var(--bg-panel); font-size: 13px; border-left: 2px solid var(--border-dim); }
+    .msg.priority { border-left: 2px solid #FFD700; background: rgba(255, 215, 0, 0.05); }
+
+    /* --- VIRTUAL ID CARD --- */
+    .id-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 40px; }
+    .id-wrapper { perspective: 1000px; margin-bottom: 20px; }
+    .virtual-card {
+      width: 380px; height: 220px; padding: 25px; background: linear-gradient(135deg, #111 0%, #000 100%);
+      border: 1px solid var(--border-light); border-radius: 12px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.9), inset 0 0 0 1px rgba(255,255,255,0.05);
+      position: relative; overflow: hidden; transform-style: preserve-3d; transition: transform 0.1s ease-out;
+    }
+    .card-logo {
+      position: absolute; top: 20px; right: 25px; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center;
+      border: 1px solid var(--accent); border-radius: 50%; font-family: 'Orbitron'; font-weight: bold; font-size: 14px; color: var(--accent);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+    .virtual-card .header { border-bottom: 1px solid var(--border-dim); padding-bottom: 15px; margin-bottom: 15px; }
+    .virtual-card h2 { font-size: 22px; margin-bottom: 5px; color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+    .virtual-card p.role { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; }
+    .card-footer { position: absolute; bottom: 25px; left: 25px; right: 25px; display: flex; justify-content: space-between; align-items: flex-end;}
+    .virtual-card .id-number { font-family: 'Orbitron'; font-size: 18px; letter-spacing: 4px; color: rgba(255,255,255,0.9); }
+    .virtual-card .score { font-size: 10px; color: var(--text-muted); text-align: right;}
+    .score span { display: block; font-size: 16px; color: #fff; font-family: 'Orbitron'; margin-top: 2px; }
+
+    /* Admin Panel specifics */
+    .command-panel { border: 1px solid #FFD700; box-shadow: 0 0 15px rgba(255,215,0,0.1); }
+  </style>
+  <!-- FIREBASE CLOUD DATABASE SCRIPTS -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <svg width="60" height="60" viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width="4">
+        <polygon points="50,10 90,90 10,90" fill="rgba(255,255,255,0.05)"></polygon>
+        <line x1="50" y1="10" x2="50" y2="90"></line>
+      </svg>
+    </div>
+    <h1>YMIRA</h1>
+    <p>Connected Operations Network</p>
+    <input type="text" id="username" placeholder="Identification Name" autocomplete="off" />
+    <input type="password" id="password" placeholder="Access Code" />
+    <button onclick="login()">Authenticate</button>
+  </div>
+</div>
+
+<!-- MAIN APPLICATION -->
+<div id="app">
+  <div class="sidebar">
+    <div class="brand"><h2 class="orbitron">YMIRA OS</h2></div>
+    <div class="nav-item active" onclick="switchTab('dashboard')">Dashboard <span>✦</span></div>
+    <div class="nav-item" onclick="switchTab('comms')">Comms Hub <span>💬</span></div>
+    <div class="nav-item" onclick="switchTab('tasks')">Workflow <span>📝</span></div>
+    <div class="nav-item" onclick="switchTab('projects')">R&D / Ideas <span>🧪</span></div>
+    <div class="nav-item" id="navAdmin" style="display:none; color: #FFD700;" onclick="switchTab('admin')">Eagle View <span>👁️</span></div>
+    <div style="flex-grow: 1;"></div>
+    <div class="nav-item" onclick="logout()" style="border-top: 1px solid var(--border-dim);">Disconnect <span>⏻</span></div>
+  </div>
+
+  <div class="main-content">
+    
+    <!-- 1. DASHBOARD -->
+    <div id="dashboard" class="section active">
+      <h1 class="header-title">Personal Terminal</h1>
+      <p class="header-sub">Verify your credentials and pending objectives.</p>
+      
+      <div class="id-container">
+        <div class="id-wrapper">
+          <div class="virtual-card" id="idCard">
+            <div class="card-logo">YM</div>
+            <div class="header"><h3 class="orbitron" style="font-size: 12px; color: var(--text-muted);">YMIRA INC.</h3></div>
+            <h2 id="cardName">NAME</h2>
+            <p class="role" id="cardRole">ROLE // TEAM</p>
+            <div class="card-footer">
+              <div class="id-number" id="cardID">YM-0000</div>
+              <div class="score">TASKS COMPLETED<br><span id="cardScore">0</span></div>
+            </div>
+          </div>
+        </div>
+        <button class="outline" style="width:250px; font-size: 12px;" onclick="downloadCard()">[ DOWNLOAD VIRTUAL ID ]</button>
+      </div>
+      
+      <div class="grid">
+        <div class="card">
+          <h3 style="color:var(--accent);">Pending Assignments</h3>
+          <div id="myAssignmentsList" style="max-height: 200px; overflow-y: auto;"></div>
+        </div>
+        <div class="card">
+          <h3>Log Custom Execution</h3>
+          <input type="text" id="reportInput" placeholder="Describe unassigned task completed..." />
+          <button onclick="submitReport()">Transmit to Manager</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. COMMS HUB -->
+    <div id="comms" class="section">
+      <h1 class="header-title">Dynamic Comms Hub</h1>
+      <p class="header-sub">Live Broadcasts and Team Messaging.</p>
+      <div class="card">
+        <div class="chat-box" id="chatBox"></div>
+        <div style="display:flex; gap:10px;">
+          <input type="text" id="msgInput" placeholder="Broadcast message..." style="margin:0;" />
+          <button style="width:150px;" onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. WORKFLOW (TASKS) -->
+    <div id="tasks" class="section">
+      <h1 class="header-title">Global Workflow</h1>
+      <p class="header-sub">System-wide task tracking and delegation.</p>
+      
+      <!-- ASSIGNMENT PANEL (Only visible to CEO & Janani) -->
+      <div class="card command-panel" id="assignPanel" style="display:none; margin-bottom: 20px;">
+        <h3 style="color:#FFD700;">Command Center: Assign Tasks</h3>
+        <select id="assignUserSelect"></select>
+        <input type="text" id="assignTaskInput" placeholder="Task Designation..." />
+        <button onclick="assignTask()" style="background:#FFD700; color:#000;">Delegate Objective</button>
+      </div>
+
+      <div class="card">
+        <h3>System Operations Log</h3>
+        <div id="globalReportsList" style="max-height: 400px; overflow-y: auto;"></div>
+      </div>
+    </div>
+
+    <!-- 4. R&D / IDEAS -->
+    <div id="projects" class="section">
+      <h1 class="header-title">Innovation Bank</h1>
+      <p class="header-sub">Dynamic Idea Documentation System</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Submit Idea</h3>
+          <input type="text" id="ideaTitle" placeholder="Idea Designation" />
+          <select id="ideaCategory">
+            <option>Tech / Software</option>
+            <option>Hardware Product</option>
+            <option>Process Optimization</option>
+            <option>Media Content</option>
+          </select>
+          <button onclick="addIdea()">Add to Bank</button>
+        </div>
+        <div class="card">
+          <h3>Repository</h3>
+          <div id="ideaList" style="max-height: 200px; overflow-y: auto;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. ADMIN EAGLE VIEW -->
+    <div id="admin" class="section">
+      <h1 class="header-title" style="color: #FFD700;">Eagle View Protocol</h1>
+      <p class="header-sub">Founder Execution Level.</p>
+      <div class="grid">
+        <div class="card" style="border-color: #FFD700;">
+          <h3 style="color: #FFD700;">System Matrices</h3>
+          <p class="list-item">Total Personnel <span class="badge" id="statMembers">0</span></p>
+          <p class="list-item">Global Tasks <span class="badge" id="statTasks">0</span></p>
+          <p class="list-item">Ideas Banked <span class="badge" id="statIdeas">0</span></p>
+        </div>
+        <div class="card">
+          <h3>Data Extraction</h3>
+          <button class="outline" onclick="exportToCSV('tasks')">📥 Export Work Logs (.CSV)</button>
+          <button class="outline" onclick="exportToCSV('ideas')">📥 Export Idea Bank (.CSV)</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+// ==========================================
+// 1. BACKEND API WRAPPER (LIVE FIREBASE)
+// ==========================================
+
+// Your exact Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDxEPKqP95k5zkwGQbWSo69fgnqtSMdInE",
+  authDomain: "ymira-16eec.firebaseapp.com",
+  projectId: "ymira-16eec",
+  storageBucket: "ymira-16eec.firebasestorage.app",
+  messagingSenderId: "307263406345",
+  appId: "1:307263406345:web:e3da14bbb0ae3bdfdad3d8"
+};
+
+// Initialize Firebase Database
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+const API = {
+  // Get data from Cloud
+  async get(collectionName) {
+    const snapshot = await db.collection(collectionName).get();
+    let data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    // Sort newest to oldest
+    data.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    return data;
+  },
+
+  // Save new data to Cloud
+  async save(collectionName, item) {
+    item.createdAt = Date.now(); // Add timestamp
+    await db.collection(collectionName).add(item);
+    return true;
+  },
+
+  // Update a task status in Cloud
+  async updateStatus(collectionName, id, newStatus) {
+    let updateData = { status: newStatus };
+    if (newStatus === 'Completed') {
+      updateData.completedAt = new Date().toISOString().split('T')[0];
+    }
+    await db.collection(collectionName).doc(id).update(updateData);
+  }
+};
+
+
+
+// ==========================================
+// 2. USERS & AUTHENTICATION
+// ==========================================
+const users =[
+  { name: "Harish KV", pass: "Admin@Ymira", role: "CEO / Founder", type: "admin", color: "#FFD700" },
+  { name: "Arjun J S", pass: "Arjun@Manager", role: "Manager", type: "manager", color: "#00E5FF" },
+  { name: "Visva Sugin N R", pass: "Visva@YT", role: "Head of YouTube", type: "youtube", color: "#FF003C" },
+  { name: "Praveen P", pass: "Praveen@Gaming", role: "Gaming Head", type: "youtube", color: "#FF003C" },
+  { name: "Devi Priya R", pass: "Devi@Edu", role: "Education Head", type: "youtube", color: "#FF003C" },
+  { name: "Janani J", pass: "Janani@Core", role: "Lyrics / Core", type: "core", color: "#B000FF" },
+  { name: "Kritick Ragul S", pass: "Kritick@Tech", role: "AI & Tech", type: "core", color: "#B000FF" },
+  { name: "Thomas Livingston", pass: "Thomas@Strat", role: "Strategy", type: "core", color: "#B000FF" },
+  { name: "Hariprakash R", pass: "Hari@Dev", role: "Development", type: "core", color: "#B000FF" },
+  { name: "Gnyanodhaya S", pass: "Gnyan@Tech", role: "Tech", type: "core", color: "#B000FF" },
+  { name: "Gowtham R", pass: "Gowtham@Ops", role: "Operations", type: "core", color: "#B000FF" },
+  { name: "Sriram", pass: "Sriram@Res", role: "Research", type: "core", color: "#B000FF" }
+];
+
+let currentUser = null;
+
+function generateID(name) {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  return "YM-" + Math.abs(hash).toString().substring(0, 4).padStart(4, '0');
+}
+
+function login() {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+  const user = users.find(u => u.name.toLowerCase() === username.toLowerCase() && u.pass === password);
+
+  if (user) {
+    currentUser = user;
+    document.documentElement.style.setProperty('--accent', user.color);
+    document.documentElement.style.setProperty('--accent-glow', user.color + '33');
+    
+    document.getElementById('loginScreen').style.opacity = '0';
+    setTimeout(() => {
+      document.getElementById('loginScreen').style.visibility = 'hidden';
+      const app = document.getElementById('app');
+      app.style.display = 'flex';
+      setTimeout(() => app.style.opacity = '1', 50);
+      setupEnvironment();
+    }, 800);
+  } else {
+    alert('ACCESS DENIED: Credentials not recognized.');
+  }
+}
+
+function logout() {
+  currentUser = null;
+  document.getElementById('app').style.opacity = '0';
+  setTimeout(() => {
+    document.getElementById('app').style.display = 'none';
+    const loginScreen = document.getElementById('loginScreen');
+    loginScreen.style.visibility = 'visible';
+    loginScreen.style.opacity = '1';
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
+  }, 500);
+}
+
+// ==========================================
+// 3. UI INITIALIZATION
+// ==========================================
+async function setupEnvironment() {
+  // Setup ID Card
+  document.getElementById('cardName').textContent = currentUser.name;
+  document.getElementById('cardRole').textContent = `${currentUser.role}`;
+  document.getElementById('cardID').textContent = generateID(currentUser.name);
+
+  // Setup Command Center (CEO & Janani ONLY)
+  if (currentUser.name === "Harish KV" || currentUser.name === "Janani J") {
+    document.getElementById('assignPanel').style.display = 'block';
+    const select = document.getElementById('assignUserSelect');
+    select.innerHTML = '<option value="">Select Personnel...</option>';
+    users.forEach(u => {
+      if(u.name !== currentUser.name) select.innerHTML += `<option value="${u.name}">${u.name} (${u.role})</option>`;
+    });
+  } else {
+    document.getElementById('assignPanel').style.display = 'none';
+  }
+
+  // Admin View
+  document.getElementById('navAdmin').style.display = (currentUser.type === "admin") ? 'flex' : 'none';
+
+  await loadAllData();
+  switchTab('dashboard');
+}
+
+function switchTab(tabId) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  event.currentTarget.classList.add('active');
+  if(tabId === 'admin') updateAdminStats();
+}
+
+// ==========================================
+// 4. CORE LOGIC (Tasks, Comms, Ideas)
+// ==========================================
+async function loadAllData() {
+  await renderTasks();
+  await renderMessages();
+  await renderIdeas();
+}
+
+// -- TASKS --
+async function assignTask() {
+  const to = document.getElementById('assignUserSelect').value;
+  const text = document.getElementById('assignTaskInput').value;
+  if(!to || !text) return alert("Select user and enter task.");
+  
+  await API.save('tasks', { 
+    type: 'assigned', assignedTo: to, text, 
+    assignedBy: currentUser.name, status: 'Pending', date: new Date().toISOString().split('T')[0] 
+  });
+  
+  document.getElementById('assignTaskInput').value = '';
+  await renderTasks();
+}
+
+async function submitReport() {
+  const text = document.getElementById('reportInput').value;
+  if(!text) return;
+  
+  await API.save('tasks', { 
+    type: 'custom', assignedTo: currentUser.name, text, 
+    status: 'Completed', completedAt: new Date().toISOString().split('T')[0] 
+  });
+  document.getElementById('reportInput').value = '';
+  await renderTasks();
+}
+
+async function markComplete(id) {
+  await API.updateStatus('tasks', id, 'Completed');
+  await renderTasks();
+}
+
+async function renderTasks() {
+  const tasks = await API.get('tasks');
+  
+  // My Dashboard Tasks
+  const myTasks = tasks.filter(t => t.assignedTo === currentUser.name);
+  let completedCount = myTasks.filter(t => t.status === 'Completed').length;
+  document.getElementById('cardScore').textContent = completedCount;
+
+  const myDiv = document.getElementById('myAssignmentsList');
+  myDiv.innerHTML = '';
+  const pending = myTasks.filter(t => t.status === 'Pending');
+  if(pending.length === 0) myDiv.innerHTML = '<p class="list-item" style="color:#555">No pending objectives.</p>';
+  
+  pending.forEach(t => {
+    myDiv.innerHTML += `
+      <div class="list-item flex-col">
+        <span style="color:#fff;">${t.text}</span>
+        <div style="width:100%; display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
+          <span style="font-size:10px; color:#aaa;">From: ${t.assignedBy}</span>
+          <button class="small" onclick="markComplete('${t.id}')">Mark Complete</button>
+        </div>
+      </div>`;
+  });
+
+  // Global Workflow List (Admin, Manager, Janani see all. Others see theirs)
+  const globalDiv = document.getElementById('globalReportsList');
+  globalDiv.innerHTML = '';
+  tasks.forEach(t => {
+    let canView = (currentUser.type === 'admin' || currentUser.type === 'manager' || currentUser.name === 'Janani J' || t.assignedTo === currentUser.name || t.assignedBy === currentUser.name);
+    if(canView) {
+      let statusColor = t.status === 'Completed' ? '#0f0' : '#fa0';
+      globalDiv.innerHTML += `
+        <div class="list-item">
+          <span><b style="color:var(--accent)">${t.assignedTo}</b>: ${t.text}</span>
+          <span class="badge" style="color:${statusColor}; border-color:${statusColor}">${t.status}</span>
+        </div>`;
+    }
+  });
+}
+
+// -- COMMS HUB --
+async function sendMessage() {
+  const text = document.getElementById('msgInput').value;
+  if(!text) return;
+  const isPriority = (currentUser.name === "Harish KV" || currentUser.name === "Janani J");
+  await API.save('messages', { sender: currentUser.name, text, isPriority, time: new Date().toLocaleTimeString() });
+  document.getElementById('msgInput').value = '';
+  await renderMessages();
+}
+
+async function renderMessages() {
+  const msgs = await API.get('messages');
+  const box = document.getElementById('chatBox');
+  box.innerHTML = '';
+  // Reverse to show oldest at top, newest at bottom
+  [...msgs].reverse().forEach(m => {
+    const cls = m.isPriority ? 'msg priority' : 'msg';
+    box.innerHTML += `<div class="${cls}">
+      <b style="color:${m.isPriority ? '#FFD700' : 'var(--accent)'}">${m.sender}</b> 
+      <span style="font-size:10px; color:#666; margin-left:10px;">${m.time}</span><br>
+      <span style="color:#ddd; margin-top:5px; display:inline-block;">${m.text}</span>
+    </div>`;
+  });
+  box.scrollTop = box.scrollHeight;
+}
+
+// -- IDEAS --
+async function addIdea() {
+  const title = document.getElementById('ideaTitle').value;
+  const category = document.getElementById('ideaCategory').value;
+  if(!title) return;
+  await API.save('ideas', { title, category, author: currentUser.name });
+  document.getElementById('ideaTitle').value = '';
+  await renderIdeas();
+}
+
+async function renderIdeas() {
+  const ideas = await API.get('ideas');
+  const div = document.getElementById('ideaList');
+  div.innerHTML = '';
+  ideas.forEach(i => {
+    div.innerHTML += `<div class="list-item">
+      <span><b>${i.title}</b><br><span style="font-size:10px; color:#666;">Auth: ${i.author}</span></span>
+      <span class="badge">${i.category}</span>
+    </div>`;
+  });
+}
+
+// ==========================================
+// 5. UTILS (Export, Card Tilt, Download)
+// ==========================================
+async function updateAdminStats() {
+  document.getElementById('statMembers').textContent = users.length;
+  document.getElementById('statTasks').textContent = (await API.get('tasks')).length;
+  document.getElementById('statIdeas').textContent = (await API.get('ideas')).length;
+}
+
+async function exportToCSV(collection) {
+  const data = await API.get(collection);
+  if(data.length === 0) return alert("No data to export.");
+  
+  let headers = Object.keys(data[0]).filter(k => k !== 'id').join(",");
+  let rows = data.map(obj => Object.keys(obj).filter(k => k !== 'id').map(k => `"${obj[k]}"`).join(",")).join("\n");
+  
+  let csvContent = "data:text/csv;charset=utf-8," + headers + "\n" + rows;
+  const link = document.createElement("a");
+  link.setAttribute("href", encodeURI(csvContent));
+  link.setAttribute("download", `YMIRA_${collection.toUpperCase()}.csv`);
+  document.body.appendChild(link); link.click(); document.body.removeChild(link);
+}
+
+// 3D Card Effect
+const card = document.getElementById('idCard');
+card.addEventListener('mousemove', (e) => {
+  const rect = card.getBoundingClientRect();
+  const rotateX = (((e.clientY - rect.top) - rect.height / 2) / rect.height) * -12; 
+  const rotateY = (((e.clientX - rect.left) - rect.width / 2) / rect.width) * 12;
+  card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
+  card.style.boxShadow = `0 30px 50px rgba(0,0,0,0.9), inset 0 0 20px var(--accent-glow)`;
+});
+card.addEventListener('mouseleave', () => {
+  card.style.transform = `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+  card.style.boxShadow = `0 20px 40px rgba(0,0,0,0.9), inset 0 0 0 1px rgba(255,255,255,0.05)`;
+});
+
+function downloadCard() {
+  const btn = event.target;
+  btn.textContent = "GENERATING ID...";
+  card.style.transform = 'none'; card.style.boxShadow = 'none';
+  html2canvas(card, { backgroundColor: '#050505', scale: 3, logging: false }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = `YMIRA_ID_${currentUser.name.replace(/\s+/g, '_')}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    btn.textContent = "[ DOWNLOAD VIRTUAL ID ]";
+    card.style.boxShadow = `0 20px 40px rgba(0,0,0,0.9), inset 0 0 0 1px rgba(255,255,255,0.05)`;
+  });
+}
+</script>
+</body>
+</html>

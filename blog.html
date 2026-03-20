@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog | YMIRA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <!-- Text logo setup (can be replaced with img if needed) -->
+        <a href="index.html" class="brand-logo" id="logo">YMIRA<span class="dot">.</span></a>
+        
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">Projects</a></li>
+            <li><a href="blog.html" class="active">Blog</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="blog-hero">
+        <img src="assets/bbg.jpg" alt="Background image" class="hero-bg" id="hero-img">
+        <div class="hero-overlay"></div>
+        <div class="hero-content reveal fade-up">
+            <h1>Insights & Ideas</h1>
+            <p>Thoughts on technology, innovation, AI, and growth.</p>
+        </div>
+    </section>
+
+    <!-- CATEGORY FILTER -->
+    <section class="filter-section reveal fade-up">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="technology">Technology</button>
+        <button class="filter-btn" data-filter="ai">AI</button>
+        <button class="filter-btn" data-filter="startup">Startup</button>
+    </section>
+
+    <!-- BLOG GRID -->
+    <section class="blog-container" id="blog-grid">
+
+        <!-- Card 1 -->
+        <div class="blog-card reveal fade-up" data-category="startup">
+            <div class="blog-image" style="background-image: url('assets/YmiraIntroduction.png');">
+                <span class="category-badge">Startup</span>
+            </div>
+            <div class="blog-content">
+                <h3>YmiRa Introduction</h3>
+                <p>What is YmiRa? YmiRa is a platform dedicated to fostering innovation and collaboration in the tech community.</p>
+                <div class="card-footer">
+                    <span class="read-time">3 min read</span>
+                    <a href="ymiraintro.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Card 2 -->
+        <div class="blog-card reveal fade-up" data-category="technology" style="transition-delay: 0.1s;">
+            <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop');">
+                <span class="category-badge">Technology</span>
+            </div>
+            <div class="blog-content">
+                <h3>Vision and Mission of YmiRa</h3>
+                <p>What it brings to the table to serve the community and foster continuous innovation.</p>
+                <div class="card-footer">
+                    <span class="read-time">4 min read</span>
+                    <a href="vmblog.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="blog-card reveal fade-up" data-category="startup" style="transition-delay: 0.2s;">
+            <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1556761175-5973dc0f32d7?q=80&w=800&auto=format&fit=crop');">
+                <span class="category-badge">Startup</span>
+            </div>
+            <div class="blog-content">
+                <h3>Building Scalable Startups in 2026</h3>
+                <p>Startups today need agility, innovation and strong execution to scale efficiently...</p>
+                <div class="card-footer">
+                    <span class="read-time">6 min read</span>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="blog-card reveal fade-up" data-category="ai" style="transition-delay: 0.3s;">
+            <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=800&auto=format&fit=crop');">
+                <span class="category-badge">AI</span>
+            </div>
+            <div class="blog-content">
+                <h3>The Future of Automation</h3>
+                <p>Automation is no longer optional. It’s becoming the backbone of growth and modern infrastructure...</p>
+                <div class="card-footer">
+                    <span class="read-time">5 min read</span>
+                    <a href="#" class="read-more">Read More →</a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="section contact-section reveal fade-up">
+        <div class="contact-card">
+            <h2>Contact / Collaborate</h2>
+            <p class="contact-subtitle">
+                Have an idea, collaboration, or feedback? Let’s build something meaningful.
+            </p>
+
+            <form id="contactForm" class="contact-form" onsubmit="event.preventDefault(); document.getElementById('formStatus').innerText='Message Sent Successfully!';">
+                <div class="input-group">
+                    <input type="text" id="name" placeholder="Your name" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="email" placeholder="Your email" required>
+                </div>
+                <div class="input-group">
+                    <textarea id="message" placeholder="Your message" rows="4" required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Send Message</button>
+                <p class="form-status" id="formStatus" style="color: #00e5ff; margin-top: 10px;"></p>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                © 2026 YMIRA. All rights reserved.
+            </div>
+
+            <div class="social-links">
+                <a href="https://youtube.com/@Blinkbreaktamil" target="_blank" aria-label="BlinkBreak Tamil YouTube">
+                    <img src="assets/social/youtube.svg" alt="YouTube">
+                </a>
+                <a href="https://youtube.com/@Blinkbreakenglish" target="_blank" aria-label="BlinkBreak English YouTube">
+                    <img src="assets/social/youtube.svg" alt="YouTube">
+                </a>
+                <a href="https://instagram.com/ymira-org-1b16a337a" target="_blank" aria-label="YMIRA Instagram">
+                    <img src="assets/social/instagram.svg" alt="Instagram">
+                </a>
+                <a href="https://twitter.com/ymiraorg" target="_blank" aria-label="YMIRA X">
+                    <img src="assets/social/x.svg" alt="X">
+                </a>
+                <a href="https://www.linkedin.com/in/ymira-org-1b16a337a/" target="_blank" aria-label="YMIRA LinkedIn">
+                    <img src="assets/social/linkedin.svg" alt="LinkedIn">
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT -->
+    <script>
+        // 1. SCROLL NAVBAR EFFECT & PARALLAX HERO
+        window.addEventListener("scroll", () => {
+            const nav = document.getElementById("navbar");
+            const heroImg = document.getElementById("hero-img");
+            
+            // Navbar Glassmorphism
+            if (window.scrollY > 50) {
+                nav.classList.add("scrolled");
+            } else {
+                nav.classList.add("scrolled"); // Always glass in modern UI, but you can toggle classes
+            }
+
+            // Subtle Hero Parallax
+            if (heroImg) {
+                heroImg.style.transform = `translateY(${window.scrollY * 0.3}px)`;
+            }
+        });
+
+        // 2. MOBILE MENU TOGGLE
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenu.classList.toggle('open');
+        });
+
+        // 3. BLOG CATEGORY FILTER
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const blogCards = document.querySelectorAll('.blog-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                blogCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'block';
+                        setTimeout(() => card.style.opacity = '1', 10);
+                    } else {
+                        card.style.opacity = '0';
+                        setTimeout(() => card.style.display = 'none', 300);
+                    }
+                });
+            });
+        });
+
+        // 4. SCROLL REVEAL ANIMATIONS
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>
