@@ -72,7 +72,6 @@
     .list-item:last-child { border-bottom: none; }
     .badge { padding: 4px 10px; border-radius: 4px; font-size: 10px; font-family: 'Orbitron'; background: rgba(255,255,255,0.1); border: 1px solid var(--border-light); font-weight: 700; }
     
-    /* VISIBLE ID CARD FOR DOWNLOAD */
     .id-card-display { width: 100%; max-width: 400px; padding: 25px; background: linear-gradient(135deg, #151518 0%, #050507 100%); border: 1px solid var(--border-light); border-radius: 16px; color: white; font-family: 'Inter', sans-serif; position: relative; overflow: hidden; margin: 0 auto 20px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     .id-card-display .card-logo-top { position: absolute; top: 20px; right: 25px; width: 40px; height: 40px; border: 1px solid #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-family: 'Orbitron'; font-size: 14px; }
     .id-card-display .id-h3 { font-family: 'Orbitron'; font-size: 12px; color: #888; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
@@ -146,7 +145,6 @@
       <div class="grid">
         <div class="card" style="text-align: center;">
           <h3>Virtual ID Card</h3>
-          <!-- VISIBLE ID CARD FOR DOWNLOAD -->
           <div id="idCard" class="id-card-display">
             <div class="card-logo-top">YM</div>
             <div class="id-h3">YMIRA INC.</div>
@@ -287,7 +285,9 @@ try {
   console.error("Firebase Init Error:", e);
 }
 
-emailjs.init({ publicKey: "4P1o5BX1kHp4H6wOv" }); 
+try {
+  emailjs.init({ publicKey: "4P1o5BX1kHp4H6wOv" });
+} catch(e) { console.error("EmailJS Init Error:", e); }
 const EMAILJS_SERVICE_ID = "service_xhmwvkg";
 const EMAILJS_WELCOME_TEMPLATE = "template_16k0qu9";
 
@@ -341,7 +341,11 @@ function login() {
 }
 
 async function checkUserProfile() {
-  if (!db) { alert("Database not connected. Check Firebase setup."); setupEnvironment(); return; }
+  if (!db) { 
+    alert("Database not connected. Check Firebase setup."); 
+    setupEnvironment(); 
+    return; 
+  }
   
   try {
     const docRef = db.collection('employees').doc(currentUser.ymId);
@@ -379,7 +383,7 @@ async function submitOnboarding() {
   try {
     await db.collection('employees').doc(currentUser.ymId).set(profileData);
     currentUser.profile = profileData;
-    // Send Welcome Email via EmailJS
+    
     try {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_WELCOME_TEMPLATE, {
         to_email: email, to_name: currentUser.name, employee_id: currentUser.ymId, role: currentUser.role
@@ -420,7 +424,6 @@ async function setupEnvironment() {
   document.getElementById('cardID').textContent = currentUser.ymId;
 
   if (db) {
-    // Log Attendance
     const today = new Date().toISOString().split('T')[0];
     const attRef = db.collection('attendance').doc(`${currentUser.ymId}_${today}`);
     const attDoc = await attRef.get();
@@ -434,7 +437,6 @@ async function setupEnvironment() {
     document.getElementById('uCheckIn').textContent = "DB ERROR";
   }
 
-  // Admin UI setup
   if (currentUser.type === "admin" || currentUser.type === "manager") {
     document.getElementById('assignPanel').style.display = 'block';
     const select = document.getElementById('assignUserSelect');
@@ -466,13 +468,28 @@ function switchTab(tabId, element) {
 }
 
 // ==========================================
-// 5. REAL-TIME FIRESTORE LOGIC
+// 5. REAL-TIME FIRESTORE LOGIC (WITH ERROR CATCHING)
 // ==========================================
 function initRealtimeListeners() {
-  db.collection('tasks').orderBy('createdAt', 'desc').onSnapshot(s => renderTasks(s.docs.map(d => ({id: d.id, ...d.data()}))));
-  db.collection('messages').orderBy('createdAt', 'asc').limitToLast(50).onSnapshot(s => renderMessages(s.docs.map(d => ({id: d.id, ...d.data()}))));
-  db.collection('ideas').orderBy('createdAt', 'desc').onSnapshot(s => renderIdeas(s.docs.map(d => ({id: d.id, ...d.data()}))));
-  db.collection('feedback').orderBy('createdAt', 'desc').onSnapshot(s => renderFeedback(s.docs.map(d => ({id: d.id, ...d.data()}))));
+  db.collection('tasks').orderBy('createdAt', 'desc').onSnapshot(
+    s => renderTasks(s.docs.map(d => ({id: d.id, ...d.data()}))),
+    err => console.error("Tasks Listener Error:", err)
+  );
+  
+  db.collection('messages').orderBy('createdAt', 'asc').limitToLast(50).onSnapshot(
+    s => renderMessages(s.docs.map(d => ({id: d.id, ...d.data()}))),
+    err => console.error("Messages Listener Error:", err)
+  );
+  
+  db.collection('ideas').orderBy('createdAt', 'desc').onSnapshot(
+    s => renderIdeas(s.docs.map(d => ({id: d.id, ...d.data()}))),
+    err => console.error("Ideas Listener Error:", err)
+  );
+  
+  db.collection('feedback').orderBy('createdAt', 'desc').onSnapshot(
+    s => renderFeedback(s.docs.map(d => ({id: d.id, ...d.data()}))),
+    err => console.error("Feedback Listener Error:", err)
+  );
 }
 
 async function assignTask() {
@@ -480,18 +497,36 @@ async function assignTask() {
   const text = document.getElementById('assignTaskInput').value;
   if(!toId || !text) return alert("Select user and enter task.");
   const toUser = users.find(u => u.ymId === toId);
-  await db.collection('tasks').add({ type: 'assigned', assignedTo: toUser.name, assignedToId: toId, text, assignedBy: currentUser.name, status: 'Pending', date: new Date().toISOString().split('T')[0], createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-  document.getElementById('assignTaskInput').value = '';
+  
+  try {
+    await db.collection('tasks').add({ type: 'assigned', assignedTo: toUser.name, assignedToId: toId, text, assignedBy: currentUser.name, status: 'Pending', date: new Date().toISOString().split('T')[0], createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+    document.getElementById('assignTaskInput').value = '';
+  } catch (error) {
+    console.error("Assign Task Error:", error);
+    alert("Failed to assign task: " + error.message);
+  }
 }
 
 async function submitReport() {
   const text = document.getElementById('reportInput').value;
   if(!text) return;
-  await db.collection('tasks').add({ type: 'custom', assignedTo: currentUser.name, assignedToId: currentUser.ymId, text, assignedBy: currentUser.name, status: 'Completed', completedAt: new Date().toISOString().split('T')[0], createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-  document.getElementById('reportInput').value = '';
+  
+  try {
+    await db.collection('tasks').add({ type: 'custom', assignedTo: currentUser.name, assignedToId: currentUser.ymId, text, assignedBy: currentUser.name, status: 'Completed', completedAt: new Date().toISOString().split('T')[0], createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+    document.getElementById('reportInput').value = '';
+  } catch (error) {
+    console.error("Submit Report Error:", error);
+    alert("Failed to transmit report: " + error.message);
+  }
 }
 
-async function markComplete(id) { await db.collection('tasks').doc(id).update({ status: 'Completed', completedAt: new Date().toISOString().split('T')[0] }); }
+async function markComplete(id) { 
+  try {
+    await db.collection('tasks').doc(id).update({ status: 'Completed', completedAt: new Date().toISOString().split('T')[0] });
+  } catch (error) {
+    alert("Failed to mark complete: " + error.message);
+  }
+}
 
 function renderTasks(tasks) {
   const myTasks = tasks.filter(t => t.assignedToId === currentUser.ymId);
@@ -531,8 +566,14 @@ async function sendMessage() {
   const text = document.getElementById('msgInput').value;
   if(!text) return;
   const isPriority = (currentUser.type === "admin");
-  await db.collection('messages').add({ sender: currentUser.name, senderId: currentUser.ymId, text, isPriority, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-  document.getElementById('msgInput').value = '';
+  
+  try {
+    await db.collection('messages').add({ sender: currentUser.name, senderId: currentUser.ymId, text, isPriority, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+    document.getElementById('msgInput').value = '';
+  } catch (error) {
+    console.error("Send Message Error:", error);
+    alert("Failed to send message: " + error.message);
+  }
 }
 
 function renderMessages(msgs) {
@@ -553,8 +594,13 @@ async function addIdea() {
   const title = document.getElementById('ideaTitle').value;
   const category = document.getElementById('ideaCategory').value;
   if(!title) return;
-  await db.collection('ideas').add({ title, category, author: currentUser.name, ymId: currentUser.ymId, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-  document.getElementById('ideaTitle').value = '';
+  
+  try {
+    await db.collection('ideas').add({ title, category, author: currentUser.name, ymId: currentUser.ymId, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+    document.getElementById('ideaTitle').value = '';
+  } catch (error) {
+    alert("Failed to add idea: " + error.message);
+  }
 }
 
 function renderIdeas(ideas) {
@@ -572,9 +618,15 @@ async function submitFeedback() {
   const cat = document.getElementById('fbCategory').value;
   const text = document.getElementById('fbText').value;
   if(!text) return;
-  await db.collection('feedback').add({ category: cat, text, author: currentUser.name, ymId: currentUser.ymId, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-  document.getElementById('fbText').value = '';
-  alert('Feedback submitted to leadership.');
+  
+  try {
+    await db.collection('feedback').add({ category: cat, text, author: currentUser.name, ymId: currentUser.ymId, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+    document.getElementById('fbText').value = '';
+    alert('Feedback submitted to leadership.');
+  } catch (error) {
+    console.error("Submit Feedback Error:", error);
+    alert("Failed to submit feedback: " + error.message);
+  }
 }
 
 function renderFeedback(feedbacks) {
@@ -595,31 +647,34 @@ function renderFeedback(feedbacks) {
 async function updateAdminStats() {
   document.getElementById('statMembers').textContent = users.length;
   if(db) {
-    const tasks = await db.collection('tasks').get();
-    const ideas = await db.collection('ideas').get();
-    document.getElementById('statTasks').textContent = tasks.size;
-    document.getElementById('statIdeas').textContent = ideas.size;
+    try {
+      const tasks = await db.collection('tasks').get();
+      const ideas = await db.collection('ideas').get();
+      document.getElementById('statTasks').textContent = tasks.size;
+      document.getElementById('statIdeas').textContent = ideas.size;
 
-    const today = new Date().toISOString().split('T')[0];
-    const attSnap = await db.collection('attendance').where('date', '==', today).get();
-    document.getElementById('statAttendance').textContent = attSnap.size;
+      const today = new Date().toISOString().split('T')[0];
+      const attSnap = await db.collection('attendance').where('date', '==', today).get();
+      document.getElementById('statAttendance').textContent = attSnap.size;
 
-    const dir = document.getElementById('employeeDirectory');
-    dir.innerHTML = '';
-    const empSnap = await db.collection('employees').get();
-    empSnap.forEach(doc => {
-      const e = doc.data();
-      dir.innerHTML += `<div class="list-item">
-        <span><b>${e.name}</b><br><span style="font-size:10px; color:#666;">${e.ymId} - ${e.email || 'No Email'}</span></span>
-        <span class="badge" style="color: #0f0; border-color: #0f0;">Profile Complete</span>
-      </div>`;
-    });
+      const dir = document.getElementById('employeeDirectory');
+      dir.innerHTML = '';
+      const empSnap = await db.collection('employees').get();
+      empSnap.forEach(doc => {
+        const e = doc.data();
+        dir.innerHTML += `<div class="list-item">
+          <span><b>${e.name}</b><br><span style="font-size:10px; color:#666;">${e.ymId} - ${e.email || 'No Email'}</span></span>
+          <span class="badge" style="color: #0f0; border-color: #0f0;">Profile Complete</span>
+        </div>`;
+      });
+    } catch (error) {
+      console.error("Admin Stats Error:", error);
+    }
   } else {
     document.getElementById('statTasks').textContent = "DB ERROR";
   }
 }
 
-// Fixed Download ID Card
 function downloadCard() {
   const btn = event.target;
   btn.textContent = "GENERATING ID...";
