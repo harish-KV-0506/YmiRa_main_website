@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Apply the saved (or system) theme before first paint to avoid a flash */
+try { var t = localStorage.getItem('theme'); if (!t && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) t = 'dark'; if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
 <title>Harish K V | AI research for neurodivergent support</title>
 <meta name="description" content="Harish K V is a final-year B.Tech student in Computer Science and Business Systems building a Cognitive Digital Twin to support neurodivergent people. Research, patents, and competition results.">
 <link rel="canonical" href="https://harish-kv-0506.github.io/HarishKV-Portfolio-/">
@@ -37,7 +41,7 @@
   "description": "Final-year B.Tech student in Computer Science and Business Systems researching AI to support neurodivergent individuals.",
   "affiliation": { "@type": "CollegeOrUniversity", "name": "K. Ramakrishnan College of Engineering" },
   "address": { "@type": "PostalAddress", "addressLocality": "Thanjavur", "addressRegion": "Tamil Nadu", "addressCountry": "IN" },
-  "sameAs": ["https://github.com/harish-KV-0506", "https://www.linkedin.com/in/harish-k-v10", "https://www.ymira.in/HarishKV"]
+  "sameAs": ["https://github.com/harish-KV-0506", "https://www.linkedin.com/in/harish-k-v10", "https://www.ymira.in"]
 }
 </script>
 
@@ -148,6 +152,132 @@ details li{margin:0 0 .55em;padding-left:.2em;font-size:1.02rem;line-height:1.45
 .foot-sig{max-width:300px;color:#fff;margin-bottom:10px}
 .foot-meta{font:400 .9rem var(--sans);color:#C5CCF0;margin:0}
 
+.certs{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;list-style:none;margin:0 0 8px;padding:0}
+.certs li{padding:12px 0;border-top:1px solid var(--rule);font-size:1.02rem;line-height:1.4}
+.certs .sub{display:block;font:400 .88rem/1.4 var(--sans);color:var(--slate);margin-top:2px}
+.post h3 a{color:var(--graphite);text-decoration:none}
+.post h3 a:hover{color:var(--ink);text-decoration:underline}
+@media (max-width:820px){.certs{grid-template-columns:1fr}}
+
+/* ---------- Walking digital-twin figure (hero background) ---------- */
+.hero{position:relative;overflow:hidden}
+.hero .wrap{position:relative;z-index:1}
+#twin{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0;pointer-events:none}
+.twin-hint{position:absolute;left:28px;bottom:10px;z-index:2;margin:0;max-width:calc(100% - 56px);font:500 .8rem/1.4 var(--sans);color:var(--slate);transition:opacity .8s ease;pointer-events:none}
+main .hero{padding-bottom:clamp(220px,22vw,280px)}
+
+/* ---------- Polish pack: tilt, glow, magnetic buttons, scroll reveals ---------- */
+#glow{position:fixed;left:0;top:0;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;pointer-events:none;z-index:-1;background:radial-gradient(circle,rgba(30,44,138,.10),rgba(30,44,138,0) 65%);opacity:0;transition:opacity .4s;will-change:transform}
+#glow.on{opacity:1}
+#progress{position:fixed;top:0;left:0;height:3px;width:100%;background:var(--ink);transform:scaleX(0);transform-origin:0 50%;z-index:60;pointer-events:none}
+.portrait{perspective:900px}
+.portrait img{transition:transform .25s ease-out;will-change:transform}
+.portrait::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.38),rgba(255,255,255,0) 55%)}
+.portrait.tilting::after{opacity:1}
+.btn{will-change:transform}
+.js .rv{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--n,0) * 70ms)}
+.js .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none;transition:none}#glow{display:none}}
+
+/* ---------- Twin simulator ---------- */
+.sim{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.2fr);gap:24px;margin-top:26px}
+.sim-card{background:#fff;border:1px solid var(--rule);border-radius:6px;padding:22px}
+.sim-card h3{font:600 .95rem var(--sans);margin:0 0 14px;letter-spacing:0;color:var(--graphite)}
+.ctl{margin:0 0 16px}
+.ctl label{display:flex;justify-content:space-between;font:500 .95rem var(--sans);margin-bottom:6px}
+.ctl output{color:var(--ink);font-weight:600;min-width:2.2em;text-align:right}
+.ctl input[type=range]{width:100%;accent-color:var(--ink);height:28px;margin:0;cursor:pointer}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.presets button{font:500 .85rem var(--sans);color:var(--ink);background:var(--wash);border:0;border-radius:999px;padding:8px 14px;cursor:pointer;transition:background .2s,color .2s}
+.presets button:hover{background:var(--ink);color:#fff}
+.sim-top{display:flex;align-items:center;gap:18px;margin-bottom:14px}
+.twin-av{flex:none;width:84px;height:84px}
+.twin-av .ring{fill:none;stroke:var(--ink);stroke-width:2;transform-box:fill-box;transform-origin:center;opacity:.5}
+.twin-av .core{fill:var(--ink);transition:fill .6s}
+.twin-av .face{fill:#fff}
+.sim-state{font-weight:500;font-size:1.7rem;line-height:1.1;letter-spacing:-.015em;margin:0 0 4px;transition:color .6s}
+.sim-tip{font:400 .95rem/1.45 var(--sans);color:var(--slate);margin:0;max-width:none}
+#simChart{display:block;width:100%;height:190px;background:var(--paper);border-radius:4px}
+.sim-legend{display:flex;gap:16px;font:400 .8rem var(--sans);color:var(--slate);margin:8px 0 14px}
+.sim-legend i{display:inline-block;width:18px;height:0;border-top:2.5px solid var(--ink);vertical-align:middle;margin-right:6px}
+.sim-legend i.d{border-top:2.5px dashed var(--ink)}
+.mods{display:grid;grid-template-columns:1fr 1fr;gap:10px;list-style:none;margin:0;padding:0}
+.mods li{border:1px solid var(--rule);border-radius:4px;padding:10px 12px;font:500 .8rem var(--sans);color:var(--slate);transition:border-color .4s,background .4s}
+.mods li b{display:block;font-weight:600;color:var(--graphite);font-size:.82rem;margin-bottom:2px}
+.mods li span{display:block;font-weight:400;font-size:.84rem;line-height:1.35;color:var(--slate)}
+.mods li.on{border-color:var(--ink);background:var(--wash)}
+.sim-note{margin-top:14px}
+@media (max-width:820px){.sim{grid-template-columns:1fr}}
+@media (max-width:520px){.mods{grid-template-columns:1fr}.sim-top{align-items:flex-start}}
+@media (prefers-reduced-motion:reduce){.twin-av .ring{animation:none!important}}
+
+/* ---------- Motion graphics pack: aurora, kinetic name, ribbon, cursor ring ---------- */
+.aurora{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.aurora i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;will-change:transform}
+.aurora i:nth-child(1){width:46vw;height:46vw;max-width:620px;max-height:620px;left:-8%;top:-18%;background:#8E98D6;animation:drift1 22s ease-in-out infinite alternate}
+.aurora i:nth-child(2){width:38vw;height:38vw;max-width:520px;max-height:520px;right:-6%;top:6%;background:#9ED0F0;animation:drift2 26s ease-in-out infinite alternate}
+.aurora i:nth-child(3){width:34vw;height:34vw;max-width:460px;max-height:460px;left:34%;bottom:-24%;background:#F6C6A8;opacity:.5;animation:drift3 30s ease-in-out infinite alternate}
+.aurora i:nth-child(4){width:26vw;height:26vw;max-width:360px;max-height:360px;left:52%;top:-10%;background:#1E2C8A;opacity:.22;animation:drift2 34s ease-in-out infinite alternate-reverse}
+.aurora::after{content:"";position:absolute;inset:0;opacity:.07;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+@keyframes drift1{to{transform:translate(18vw,10vh) scale(1.15)}}
+@keyframes drift2{to{transform:translate(-14vw,14vh) scale(.9)}}
+@keyframes drift3{to{transform:translate(-18vw,-12vh) scale(1.2)}}
+
+h1 .ch{display:inline-block;transition:transform .45s cubic-bezier(.2,.8,.2,1),color .3s;will-change:transform}
+.js:not(.is-ready) h1 .ch{opacity:0}
+.js.is-ready h1 .ch{animation:chIn .9s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--k) * 55ms + 250ms)}
+@keyframes chIn{from{opacity:0;transform:translateY(45%) rotate(6deg)}}
+
+.ribbon{position:relative;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);background:var(--paper);overflow:hidden;padding:20px 0}
+.ribbon-track{display:flex;width:max-content;animation:ribbon 48s linear infinite}
+.ribbon:hover .ribbon-track{animation-play-state:paused}
+.ribbon-track span{display:inline-flex;align-items:center;gap:28px;padding-right:28px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(1.5rem,3.4vw,2.5rem);letter-spacing:-.01em;white-space:nowrap;color:var(--graphite)}
+.ribbon-track span::after{content:"";width:12px;height:12px;border-radius:50%;background:var(--ink);flex:none}
+.ribbon-track b{font-style:normal;font-weight:600;color:var(--ink)}
+@keyframes ribbon{to{transform:translateX(-50%)}}
+
+#cring{position:fixed;left:0;top:0;width:36px;height:36px;margin:-18px 0 0 -18px;border:1.5px solid var(--ink);border-radius:50%;pointer-events:none;z-index:90;opacity:0;transition:width .25s,height .25s,margin .25s,background .25s,opacity .3s;will-change:transform}
+#cring.on{opacity:.6}
+#cring.big{width:64px;height:64px;margin:-32px 0 0 -32px;background:rgba(30,44,138,.1);opacity:.9}
+
+@media (prefers-reduced-motion:reduce){
+  .aurora i,.ribbon-track{animation:none!important}
+  .js.is-ready h1 .ch{animation:none}
+  .js:not(.is-ready) h1 .ch{opacity:1}
+  #cring{display:none}
+}
+
+/* ---------- Dark mode with circular reveal ---------- */
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#0D1020;--wash:#1B2142;--ink:#8FA0FF;--ink-deep:#B5C0FF;
+  --graphite:#E8EBF6;--slate:#A1A9C2;--rule:#2A3150;
+}
+html[data-theme="dark"] .nav{background:rgba(13,16,32,.88)}
+html[data-theme="dark"] .btn.solid,html[data-theme="dark"] .btn.solid:hover{color:#0D1020}
+html[data-theme="dark"] .btn.line:hover,html[data-theme="dark"] .presets button:hover{color:#0D1020}
+html[data-theme="dark"] .contact{background:#151A3A}
+html[data-theme="dark"] .sim-card,html[data-theme="dark"] .pills li{background:#141935}
+html[data-theme="dark"] .aurora i{opacity:.26}
+html[data-theme="dark"] #glow{background:radial-gradient(circle,rgba(143,160,255,.13),rgba(143,160,255,0) 65%)}
+html[data-theme="dark"] #twin{filter:invert(1) hue-rotate(180deg)}
+html[data-theme="dark"] #simChart{background:#F4F6FA;filter:invert(1) hue-rotate(180deg)}
+html[data-theme="dark"] .sim-state,html[data-theme="dark"] .twin-av{filter:brightness(2.4) saturate(1.1)}
+html[data-theme="dark"] .portrait img{filter:brightness(.92)}
+
+.theme-btn{flex:none;width:38px;height:38px;border-radius:50%;border:1.5px solid var(--rule);background:transparent;color:var(--graphite);display:grid;place-items:center;cursor:pointer;transition:border-color .2s,background .2s}
+.theme-btn:hover{border-color:var(--ink);background:var(--wash)}
+.theme-btn svg{width:19px;height:19px;transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
+.theme-btn .moon{display:none}
+html[data-theme="dark"] .theme-btn .sun{display:none}
+html[data-theme="dark"] .theme-btn .moon{display:block}
+html[data-theme="dark"] .theme-btn svg{transform:rotate(360deg)}
+.nav .wrap{gap:16px}
+
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+::view-transition-old(root){z-index:1}
+::view-transition-new(root){z-index:2}
+
 @media (max-width:820px){
   .hero .wrap{grid-template-columns:1fr}
   .portrait{justify-self:start;max-width:260px;order:-1;margin-bottom:10px}
@@ -173,6 +303,9 @@ details li{margin:0 0 .55em;padding-left:.2em;font-size:1.02rem;line-height:1.45
 </head>
 
 <body>
+  <div id="cring" aria-hidden="true"></div>
+  <div id="glow" aria-hidden="true"></div>
+<div id="progress" aria-hidden="true"></div>
 <div id="intro" role="presentation" aria-hidden="true">
   <div class="stage">
 <svg class="sig" viewBox="0 0 805 385" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Harish K V signature">
@@ -229,23 +362,33 @@ details li{margin:0 0 .55em;padding-left:.2em;font-size:1.02rem;line-height:1.45
         <li><a href="#research">Research</a></li>
         <li><a href="#patents">Patents</a></li>
         <li><a href="#recognition">Recognition</a></li>
+        <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#simulator">Simulator</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#leadership">Leadership</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+  <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M5.2 18.8l1.6-1.6M17.2 6.8l1.6-1.6"/></svg>
+  <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7z"/></svg>
+</button>
   </div>
 </header>
 
 <main id="top">
   <div class="hero">
+    <div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <canvas id="twin" aria-hidden="true"></canvas>
+<p class="twin-hint" id="twinHint">Move your cursor near the figure. Click anywhere to drop a node, or click the figure to change what it does.</p>
     <div class="wrap">
       <div>
         <h1 class="rise" style="--i:0">Harish K V</h1>
         <p class="lead rise" style="--i:1">I build AI that helps neurodivergent people be understood, and I'm heading toward graduate research in trustworthy, human-centered AI.</p>
         <p class="meta rise" style="--i:2">
           <span>Final-year B.Tech, Computer Science and Business Systems</span>
-          <span>K. Ramakrishnan College of Engineering, Thanjavur</span>
+          <span>K. Ramakrishnan College of Engineering, Tiruchirappalli</span>
           <span>Graduating 2027</span>
         </p>
         <div class="btns rise" style="--i:3">
@@ -258,6 +401,25 @@ details li{margin:0 0 .55em;padding-left:.2em;font-size:1.02rem;line-height:1.45
       </div>
     </div>
   </div>
+
+<div class="ribbon" aria-label="Highlights">
+  <div class="ribbon-track">
+    <span><b>1st Runner-Up</b> Mechanica 2025, IIT Madras</span>
+    <span><b>Finalist</b> Incubeat Pitching Challenge, NALSAR</span>
+    <span><b>Granted</b> German patent</span>
+    <span><b>Finalist</b> Pitch Cafe 8.0, IIIT Delhi</span>
+    <span><b>1st Runner-Up</b> Isysway Hackathon, Thanjavur</span>
+    <span><b>Finalist</b> Hacksagon, IIITM Gwalior</span>
+    <span><b>IOY Ambassador</b> 2026–27</span>
+    <span><b>1st Runner-Up</b> Mechanica 2025, IIT Madras</span>
+    <span><b>Finalist</b> Incubeat Pitching Challenge, NALSAR</span>
+    <span><b>Granted</b> German patent</span>
+    <span><b>Finalist</b> Pitch Cafe 8.0, IIIT Delhi</span>
+    <span><b>1st Runner-Up</b> Isysway Hackathon, Thanjavur</span>
+    <span><b>Finalist</b> Hacksagon, IIITM Gwalior</span>
+    <span><b>IOY Ambassador</b> 2026–27</span>
+  </div>
+</div>
 
   <section id="research">
     <div class="wrap sec">
@@ -283,6 +445,55 @@ details li{margin:0 0 .55em;padding-left:.2em;font-size:1.02rem;line-height:1.45
       </div>
     </div>
   </section>
+
+<section id="simulator">
+  <div class="wrap sec">
+    <h2>Twin simulator</h2>
+    <div>
+      <p>A small, illustrative model of how a Cognitive Digital Twin could respond when someone's environment changes. Move the sliders, or pick a scenario, and watch the predicted state and the suggested support update.</p>
+      <div class="sim">
+        <div class="sim-card">
+          <h3>The environment</h3>
+          <div class="ctl"><label for="sSensory">Sensory load <output id="oSensory">30</output></label><input id="sSensory" type="range" min="0" max="100" value="30"></div>
+          <div class="ctl"><label for="sSocial">Social demand <output id="oSocial">30</output></label><input id="sSocial" type="range" min="0" max="100" value="30"></div>
+          <div class="ctl"><label for="sRoutine">Routine disruption <output id="oRoutine">20</output></label><input id="sRoutine" type="range" min="0" max="100" value="20"></div>
+          <div class="ctl"><label for="sSupport">Support in place <output id="oSupport">50</output></label><input id="sSupport" type="range" min="0" max="100" value="50"></div>
+          <div class="presets" aria-label="Scenarios">
+            <button type="button" data-p="20,20,10,60">Quiet classroom</button>
+            <button type="button" data-p="85,70,30,20">Busy hallway</button>
+            <button type="button" data-p="35,40,90,30">Sudden schedule change</button>
+            <button type="button" data-p="85,70,30,90">Same hallway, with support</button>
+          </div>
+        </div>
+        <div class="sim-card">
+          <h3>The twin</h3>
+          <div class="sim-top">
+            <svg class="twin-av" viewBox="0 0 100 100" aria-hidden="true">
+              <circle class="ring" id="ring1" cx="50" cy="50" r="30"/>
+              <circle class="ring" id="ring2" cx="50" cy="50" r="30"/>
+              <circle class="core" id="core" cx="50" cy="50" r="22"/>
+              <circle class="face" cx="43" cy="47" r="2.6"/><circle class="face" cx="57" cy="47" r="2.6"/>
+              <path id="mouth" d="M42 58 Q50 63 58 58" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>
+            </svg>
+            <div>
+              <p class="sim-state" id="simState" aria-live="polite">Calm</p>
+              <p class="sim-tip" id="simTip">No change needed. Keep the current routine.</p>
+            </div>
+          </div>
+          <canvas id="simChart" role="img" aria-label="Chart of the twin's predicted regulation over time, with a dashed forecast"></canvas>
+          <div class="sim-legend"><span><i></i>Predicted regulation</span><span><i class="d"></i>Forecast</span></div>
+          <ul class="mods">
+            <li id="mBeh"><b>Behavioral model</b><span id="tBeh"></span></li>
+            <li id="mPred"><b>Predictive analytics</b><span id="tPred"></span></li>
+            <li id="mConv"><b>Conversational AI</b><span id="tConv"></span></li>
+            <li id="mVR"><b>Immersive VR</b><span id="tVR"></span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="small sim-note">Illustrative only. The numbers are invented to show the idea, and this is not a clinical or diagnostic tool.</p>
+    </div>
+  </div>
+</section>
 
   <section id="patents">
     <div class="wrap sec">
@@ -346,6 +557,25 @@ details li{margin:0 0 .55em;padding-left:.2em;font-size:1.02rem;line-height:1.45
     </div>
   </section>
 
+
+<section id="blog">
+  <div class="wrap sec">
+    <h2>Blog</h2>
+    <ul class="rows">
+      <li class="post">
+  <div>
+    <h3><a href="blog/ymira-dotoo.html">From Ideas to Innovation: My Journey with YmiRa and DoToo</a></h3>
+    <p>How building YmiRa and DoToo taught me that innovation grows through experimentation, collaboration, and a clear understanding of the problem being solved.</p>
+  </div>
+  <span class="when">Oct 2026</span>
+</li>
+      
+    </ul>
+    <!-- Optional: remove if you have no external blog -->
+    <p class="small" style="grid-column:2"><a href="YOUR-BLOG-HOME-LINK">Read all posts</a></p>
+  </div>
+</section>
+
   <section id="experience">
     <div class="wrap sec">
       <h2>Experience</h2>
@@ -369,7 +599,7 @@ details li{margin:0 0 .55em;padding-left:.2em;font-size:1.02rem;line-height:1.45
         <ul class="rows">
           <li><div><b>President, Department of Computer Science and Business Systems</b></div></li>
           <li><div><b>IOY Ambassador</b><span class="sub">International Organization of Youth</span></div><span class="when">2026–27</span></li>
-          <li><div><b>Founder, YmiRa</b><span class="sub">Technology and innovation platform. <a href="https://www.ymira.in/HarishKV">ymira.in/HarishKV</a></span></div></li>
+          <li><div><b>Founder, YmiRa</b><span class="sub">Technology and innovation platform. <a href="https://www.ymira.in">ymira.in</a></span></div></li>
           <li><div><b>Founder, DoToo</b><span class="sub">Social innovation platform</span></div></li>
           <li><div><b>Team Lead, Zero Gravity 001</b><span class="sub">NASA Space Apps Challenge</span></div></li>
           <li><div><b>Secretary, Craters Club</b><span class="sub">Department of Physics</span></div></li>
@@ -385,6 +615,66 @@ details li{margin:0 0 .55em;padding-left:.2em;font-size:1.02rem;line-height:1.45
     </div>
   </section>
 
+  <section id="certifications">
+  <div class="wrap sec">
+    <h2>Certifications</h2>
+    <div>
+      <p class="group">Cloud and AI</p>
+      <ul class="certs">
+        <li>AWS Cloud Practitioner (global certification)<span class="sub">AWS, Aug–Sep 2025</span></li>
+        <li>Cloud for Risk and Compliance Executives<span class="sub">AWS Training and Certification, Aug 2025</span></li>
+        <li>Getting Started with AWS Services Fundamentals<span class="sub">Simplilearn, Aug 2024 to present</span></li>
+        <li>Introduction to Large Language Models (LLMs)<span class="sub">NPTEL (SWAYAM), Jun–Dec 2025</span></li>
+        <li>Introduction to Large Language Models<span class="sub">Simplilearn, Jul–Aug 2024</span></li>
+        <li>Introduction to Artificial Intelligence<span class="sub">Simplilearn, Aug 2024 to present</span></li>
+        <li>Deep Learning<span class="sub">NPTEL (SWAYAM), Jan–Apr 2025</span></li>
+        <li>Introduction to Machine Learning<span class="sub">NPTEL (SWAYAM), Jan–Apr 2025</span></li>
+        <li>Affective Computing<span class="sub">NPTEL (SWAYAM), Jan–Apr 2025</span></li>
+        <li>Introduction to Digital Transformation with Google Cloud<span class="sub">Simplilearn, Aug 2024</span></li>
+        <li>ChatGPT for Beginners<span class="sub">Great Learning, Aug–Sep 2024</span></li>
+      </ul>
+
+      <p class="group">Programming, data, and systems</p>
+      <ul class="certs">
+        <li>Data Science for Engineers<span class="sub">NPTEL (SWAYAM), Jun–Dec 2025</span></li>
+        <li>Programming in Modern C++<span class="sub">NPTEL (SWAYAM), Jun–Dec 2025</span></li>
+        <li>The Joy of Computing Using Python<span class="sub">NPTEL (SWAYAM), Jul–Oct 2024</span></li>
+        <li>Database Management System<span class="sub">NPTEL (SWAYAM), Jan–Mar 2024</span></li>
+        <li>MongoDB Basics for Students<span class="sub">MongoDB, Jul 2025</span></li>
+        <li>Data Visualization: Empowering Business with Effective Insights<span class="sub">Forage, Oct 2025</span></li>
+        <li>Introduction to Internet of Things<span class="sub">NPTEL (SWAYAM), Jan–Apr 2024</span></li>
+        <li>Cloud Computing<span class="sub">NPTEL (SWAYAM), Jul–Oct 2024</span></li>
+        <li>Advance Distributed System<span class="sub">NPTEL (SWAYAM), Jul–Oct 2024</span></li>
+        <li>Computer Architecture<span class="sub">Coursera, Jul 2024 to present</span></li>
+        <li>Blockchain Security<span class="sub">Coursera, Jul 2024 to present</span></li>
+        <li>Excel for Beginners<span class="sub">Great Learning, Jun–Aug 2024</span></li>
+      </ul>
+
+      <p class="group">Research methods</p>
+      <ul class="certs">
+        <li>Systematic Review and Meta-Analysis for Dental Health<span class="sub">ICMR-NIE, SWAYAM, Jul 2026</span></li>
+        <li>Systematic Review and Meta-Analysis<span class="sub">Carnegie Mellon University, in progress</span></li>
+        <li>Introduction to Data Analysis<span class="sub">Alison, in progress</span></li>
+        <li>Mastering the Academic Desk Research Paper<span class="sub">Alison, in progress</span></li>
+        <li>Data Analysis and Decision Making III<span class="sub">NPTEL (SWAYAM), Jul–Oct 2024</span></li>
+      </ul>
+
+      <p class="group">Business and communication</p>
+      <ul class="certs">
+        <li>E-business<span class="sub">NPTEL (SWAYAM), Jul–Oct 2024</span></li>
+        <li>Introduction to SEO<span class="sub">Simplilearn, Jul 2024</span></li>
+        <li>Search Engine Optimization (SEO)<span class="sub">Simplilearn, Feb 2024</span></li>
+        <li>Introduction to LinkedIn Marketing<span class="sub">Simplilearn, Jul–Aug 2024</span></li>
+        <li>Basics of Snapchat Marketing<span class="sub">Simplilearn, Jul–Aug 2024</span></li>
+        <li>Marketing with Canva<span class="sub">Canva, Oct 2025</span></li>
+        <li>Canva Essentials<span class="sub">Canva, Oct 2025</span></li>
+        <li>Smart English Basics for Professionals<span class="sub">Great Learning Academy, Aug 2024</span></li>
+        <li>First Step Korean<span class="sub">Coursera, Feb 2024 to present</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
   <section id="contact" class="contact">
     <div class="wrap">
       <h2>Let's talk</h2>
@@ -392,7 +682,7 @@ details li{margin:0 0 .55em;padding-left:.2em;font-size:1.02rem;line-height:1.45
       <ul class="links">
         <li><a href="https://github.com/harish-KV-0506">GitHub</a></li>
         <li><a href="https://www.linkedin.com/in/harish-k-v10">LinkedIn</a></li>
-        <li><a href="https://www.ymira.in/HarishKV">YmiRa</a></li>
+        <li><a href="https://www.ymira.in">YmiRa</a></li>
         <li><a href="assets/Harish_KV_Resume.pdf" download>Résumé (PDF)</a></li>
       </ul>
       <div class="foot-sig" id="footSig">
@@ -484,5 +774,498 @@ details li{margin:0 0 .55em;padding-left:.2em;font-size:1.02rem;line-height:1.45
   }
 })();
 </script>
+<script>
+/* Walking digital-twin figure behind the hero */
+(function () {
+  var hero = document.querySelector('.hero'), cv = document.getElementById('twin'), hint = document.getElementById('twinHint');
+  if (!hero || !cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d'), root = document.documentElement;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var INK = '30,44,138', W = 0, H = 0, ground = 0, S = 1, T = 0, last = 0, visible = true;
+  var ptr = { x: 0, y: 0, on: false, sp: 0, px: 0, py: 0, pt: 0 };
+  var nodes = [], MODES = ['wave', 'jump', 'dance', 'spin'], modeIdx = 0;
+  var m = { x: -80, dir: 1, sx: 1, vx: 0, phase: 0, state: 'walk', timer: 0, target: null,
+            lean: 0, hop: 0, hover: 0, cool: 0, spin: 0, gaze: 0, aim: 0 };
+
+  function rand(a, b) { return a + Math.random() * (b - a); }
+  function setDir(d) { if (d !== m.dir) { m.dir = d; m.sx = 0; } }
+
+  function resize() {
+    var r = hero.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2);
+    W = r.width; H = r.height;
+    cv.width = Math.round(W * d); cv.height = Math.round(H * d);
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    ground = H - 54;
+    S = Math.max(0.75, Math.min(1.1, W / 1000));
+    if (reduce) { m.x = W * 0.3; draw(); }
+  }
+
+  /* ---------- behaviour ---------- */
+  function ready() { return root.classList.contains('is-ready') || performance.now() > 7000; }
+
+  function startMode(name) {
+    m.state = name; m.target = null; m.cool = 3; m.spin = 0;
+    m.timer = { wave: 3.4, jump: 1.9, dance: 3.6, spin: 1.6 }[name];
+  }
+
+  function update(dt) {
+    if (!ready()) return;
+    T += dt; m.cool = Math.max(0, m.cool - dt); m.sx = Math.min(1, m.sx + dt * 5);
+    var cx = m.x, cy = ground - 96 * S;
+    var dx = ptr.x - cx, dy = ptr.y - cy, dist = Math.hypot(dx, dy);
+    var near = ptr.on && dist < 260 * S, calm = (m.state === 'idle' || m.state === 'walk' || m.state === 'wave');
+    m.hover = near ? m.hover + dt : 0;
+    var gazeT = near ? Math.max(-0.7, Math.min(0.7, dy / Math.max(dist, 1))) : 0;
+    m.gaze += (gazeT - m.gaze) * Math.min(1, dt * 6);
+    m.hop += (0 - m.hop) * Math.min(1, dt * 12);
+    m.lean += (0 - m.lean) * Math.min(1, dt * 4);
+
+    /* the cursor gets too close: step back, startled */
+    if (near && dist < 85 * S && calm && m.cool <= 0 && m.state !== 'startle') {
+      setDir(dx >= 0 ? 1 : -1); m.state = 'startle'; m.timer = 0.8; m.cool = 3;
+      m.vx = -Math.sign(dx || 1) * 130 * S; m.target = null;
+    }
+
+    switch (m.state) {
+      case 'idle':
+        m.vx += (0 - m.vx) * Math.min(1, dt * 6);
+        if (near) setDir(dx >= 0 ? 1 : -1);
+        if (near && m.hover > 0.5 && m.cool <= 0 && dist > 85 * S) { m.state = 'wave'; m.timer = 3.4; break; }
+        m.timer -= dt;
+        if (m.timer <= 0) {
+          if (Math.random() < 0.65) { m.target = { x: rand(50 * S, W - 50 * S) }; m.state = 'walk'; }
+          else { setDir(-m.dir); m.timer = rand(1.5, 3); }
+        }
+        break;
+      case 'walk':
+        var tx = m.target.x, d = tx - m.x;
+        setDir(d >= 0 ? 1 : -1);
+        m.vx += (m.dir * 64 * S - m.vx) * Math.min(1, dt * 5);
+        if (near && m.hover > 0.6 && m.cool <= 0 && !m.target.node && dist > 85 * S) { m.state = 'wave'; m.timer = 3.4; break; }
+        if (Math.abs(d) < 4) {
+          m.vx = 0;
+          if (m.target.node) { m.target.node.synced = T; m.state = 'inspect'; m.timer = 2; }
+          else { m.state = 'idle'; m.timer = rand(1.5, 4.5); }
+          m.target = null;
+        }
+        break;
+      case 'wave':
+        m.vx += (0 - m.vx) * Math.min(1, dt * 6);
+        if (ptr.on) setDir(dx >= 0 ? 1 : -1);
+        m.timer -= dt;
+        if (m.timer <= 0 || (!near && m.timer < 3)) { m.state = 'idle'; m.timer = rand(1, 2.5); m.cool = 4; }
+        break;
+      case 'startle':
+        m.vx *= Math.pow(0.02, dt);
+        m.hop = Math.sin(Math.max(0, m.timer / 0.8) * Math.PI) * 14 * S;
+        m.timer -= dt;
+        if (m.timer <= 0) { m.state = 'idle'; m.timer = 1.2; m.vx = 0; }
+        break;
+      case 'inspect':
+        m.vx += (0 - m.vx) * Math.min(1, dt * 8);
+        m.lean = 0.12; m.timer -= dt;
+        if (m.timer <= 0) { m.state = 'idle'; m.timer = rand(1, 2.5); }
+        break;
+      case 'jump':
+        m.vx = 0; m.hop = Math.abs(Math.sin((1.9 - m.timer) * 5.6)) * 38 * S; m.timer -= dt;
+        if (m.timer <= 0) { m.state = 'idle'; m.timer = 1.2; }
+        break;
+      case 'dance':
+        m.vx = 0; m.hop = Math.abs(Math.sin(T * 6)) * 6 * S; m.timer -= dt;
+        if (m.timer <= 0) { m.state = 'idle'; m.timer = 1.2; }
+        break;
+      case 'spin':
+        m.vx = 0; m.spin += dt * 9; m.sx = Math.cos(m.spin); m.timer -= dt;
+        if (m.timer <= 0) { m.state = 'idle'; m.timer = 1.2; m.sx = 1; }
+        break;
+    }
+
+    m.x += m.vx * dt;
+    if (m.state !== 'walk' || !m.target || m.target.entrance === undefined) m.x = Math.max(24 * S, Math.min(W - 24 * S, m.x));
+    m.phase += Math.abs(m.vx) * dt / (11 * S);
+    nodes = nodes.filter(function (n) { return T - n.t < 18; });
+  }
+
+  /* ---------- drawing ---------- */
+  function line(pts, w, a) {
+    ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
+    for (var i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+    ctx.lineWidth = w; ctx.strokeStyle = 'rgba(' + INK + ',' + a + ')'; ctx.stroke();
+  }
+  function dot(p, r, a) { ctx.beginPath(); ctx.arc(p[0], p[1], r, 0, 6.2832); ctx.fillStyle = 'rgba(' + INK + ',' + a + ')'; ctx.fill(); }
+
+  function drawFigure() {
+    var s = S, f = m.dir, sx = m.sx, ph = m.phase, t = T, st = m.state;
+    var wk = Math.min(1, Math.abs(m.vx) / (28 * s)), sw = Math.sin(ph), cw = Math.cos(ph);
+    var L = 46 * s, TL = 62 * s, UA = 34 * s, FA = 32 * s, hr = 14 * s;
+    var dance = st === 'dance', up = st === 'jump' || st === 'startle';
+
+    /* legs: thigh angle + knee flex, hip height set by the lower foot so the planted foot touches the ground */
+    var legs = [], depth = 0, k, a, kf;
+    for (k = 0; k < 2; k++) {
+      var sg = k ? -1 : 1;
+      a = sg * 0.46 * sw * wk + sg * 0.07 * (1 - wk);
+      kf = 0.06 + 0.85 * Math.max(0, sg * cw) * wk;
+      if (dance) a += sg * 0.22 * Math.sin(t * 6);
+      if (up) { a += sg * 0.18; kf += m.hop > 3 * s ? 0.5 : 0; }
+      var kx = Math.sin(a) * L, ky = Math.cos(a) * L;
+      var ax = kx + Math.sin(a - kf) * L, ay = ky + Math.cos(a - kf) * L;
+      legs.push({ kx: kx, ky: ky, ax: ax, ay: ay });
+      depth = Math.max(depth, ay);
+    }
+    var hx = m.x + (dance ? Math.sin(t * 6) * 4 * s * f : 0), hy = ground - depth - m.hop;
+    function P(lx, ly) { return [hx + lx * f * sx, hy + ly]; }
+
+    var lean = 0.07 * wk + m.lean + (dance ? Math.sin(t * 6) * 0.08 : 0);
+    var sh = [Math.sin(lean) * TL, -Math.cos(lean) * TL];
+    var hc = [sh[0] + Math.sin(lean) * (hr + 6 * s), sh[1] - Math.cos(lean) * (hr + 6 * s) - Math.sin(t * 1.9) * 0.8 * s * (1 - wk)];
+
+    /* arms */
+    var arms = [], b, e;
+    for (k = 0; k < 2; k++) {
+      var sa = k ? 1 : -1;
+      b = sa * 0.5 * sw * wk + sa * 0.06; e = 0.3 + 0.25 * wk;
+      if (st === 'wave' && k === 1) { b = 2.5; e = -0.1 + Math.sin(t * 11) * 0.55; }
+      else if (st === 'wave') { b = 0.1; }
+      if (up) { b = 2.5 + sa * 0.15; e = 0.15; }
+      if (dance) { b = 1.7 + sa * Math.sin(t * 6) * 0.8; e = 0.45; }
+      if (st === 'inspect' && k === 1) { b = 1.75; e = 0.0; }
+      var ex = sh[0] + Math.sin(b) * UA, ey = sh[1] + Math.cos(b) * UA;
+      arms.push({ ex: ex, ey: ey, wx: ex + Math.sin(b + e) * FA, wy: ey + Math.cos(b + e) * FA });
+    }
+
+    /* soft shadow */
+    ctx.beginPath(); ctx.ellipse(m.x, ground + 2, 34 * s * Math.max(0.3, 1 - m.hop / (70 * s)), 5 * s, 0, 0, 6.2832);
+    ctx.fillStyle = 'rgba(' + INK + ',.09)'; ctx.fill();
+
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    function leg(i, a1) { var l = legs[i]; var hp = P(0, 0);
+      line([hp, P(l.kx, l.ky), P(l.ax, l.ay), P(l.ax + 11 * s, l.ay + 1 * s)], 3.4 * s, a1); dot(P(l.kx, l.ky), 2.3 * s, a1); }
+    function arm(i, a1) { var r = arms[i]; line([P(sh[0], sh[1]), P(r.ex, r.ey), P(r.wx, r.wy)], 3 * s, a1); dot(P(r.ex, r.ey), 2.1 * s, a1); }
+
+    leg(1, 0.28); arm(0, 0.28);
+    line([P(0, 0), P(sh[0], sh[1])], 4.6 * s, 0.55);
+    leg(0, 0.55); arm(1, 0.55);
+
+    /* head with eye that follows the cursor */
+    var h = P(hc[0], hc[1]);
+    ctx.beginPath(); ctx.arc(h[0], h[1], hr, 0, 6.2832);
+    ctx.fillStyle = 'rgba(244,246,250,.92)'; ctx.fill();
+    ctx.lineWidth = 3 * s; ctx.strokeStyle = 'rgba(' + INK + ',.55)'; ctx.stroke();
+    if (Math.abs(sx) > 0.25) dot(P(hc[0] + 6.5 * s, hc[1] - 2 * s + m.gaze * 4.5 * s), 1.9 * s, 0.75);
+  }
+
+  function drawNodes() {
+    var i, n, age, fade;
+    for (i = 0; i < nodes.length; i++) {
+      n = nodes[i]; age = T - n.t;
+      fade = Math.min(1, age * 3) * (age > 16 ? (18 - age) / 2 : 1);
+      if (i > 0) { ctx.beginPath(); ctx.moveTo(nodes[i - 1].x, nodes[i - 1].y); ctx.lineTo(n.x, n.y);
+        ctx.lineWidth = 1.2; ctx.strokeStyle = 'rgba(' + INK + ',' + (0.2 * fade) + ')'; ctx.stroke(); }
+      ctx.setLineDash([2, 5]); ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(n.x, ground);
+      ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(' + INK + ',' + (0.22 * fade) + ')'; ctx.stroke(); ctx.setLineDash([]);
+      if (age < 0.9) { ctx.beginPath(); ctx.arc(n.x, n.y, 6 + age * 55, 0, 6.2832);
+        ctx.strokeStyle = 'rgba(' + INK + ',' + (0.45 * (1 - age / 0.9)) + ')'; ctx.lineWidth = 1.5; ctx.stroke(); }
+      if (n.synced) { var q = T - n.synced; if (q < 1.2) { ctx.beginPath(); ctx.arc(n.x, n.y, 8 + q * 30, 0, 6.2832);
+        ctx.strokeStyle = 'rgba(' + INK + ',' + (0.5 * (1 - q / 1.2)) + ')'; ctx.lineWidth = 2; ctx.stroke(); } }
+      ctx.beginPath(); ctx.arc(n.x, n.y, 6, 0, 6.2832);
+      ctx.fillStyle = n.synced ? 'rgba(' + INK + ',' + (0.85 * fade) + ')' : 'rgba(255,255,255,' + fade + ')'; ctx.fill();
+      ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(' + INK + ',' + (0.8 * fade) + ')'; ctx.stroke();
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.setLineDash([2, 9]); ctx.beginPath(); ctx.moveTo(0, ground); ctx.lineTo(W, ground);
+    ctx.lineWidth = 1.5; ctx.strokeStyle = 'rgba(' + INK + ',.2)'; ctx.stroke(); ctx.setLineDash([]);
+    drawNodes(); drawFigure();
+  }
+
+  /* ---------- input ---------- */
+  function overFigure(x, y) { return Math.abs(x - m.x) < 50 * S && y > ground - 205 * S && y < ground + 12; }
+  function hideHint() { if (hint) hint.style.opacity = '0'; }
+
+  window.addEventListener('pointermove', function (e) {
+    var r = hero.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, now = performance.now();
+    ptr.on = x > -30 && x < r.width + 30 && y > -30 && y < r.height + 30;
+    if (ptr.pt) { var dtp = Math.max(1, now - ptr.pt); ptr.sp = Math.hypot(x - ptr.px, y - ptr.py) / dtp * 1000; }
+    ptr.x = x; ptr.y = y; ptr.px = x; ptr.py = y; ptr.pt = now;
+    hero.style.cursor = (ptr.on && overFigure(x, y)) ? 'pointer' : '';
+  }, { passive: true });
+  document.documentElement.addEventListener('mouseleave', function () { ptr.on = false; });
+  window.addEventListener('pointerup', function (e) { if (e.pointerType === 'touch') setTimeout(function () { ptr.on = false; }, 1400); });
+
+  hero.addEventListener('click', function (e) {
+    if (reduce || e.target.closest('a,button,summary,input,img')) return;
+    if (window.getSelection && String(window.getSelection())) return;
+    var r = hero.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+    hideHint();
+    if (overFigure(x, y)) { startMode(MODES[modeIdx++ % MODES.length]); return; }
+    var node = { x: x, y: Math.max(H * 0.1, Math.min(ground - 24, y)), t: T, synced: 0 };
+    nodes.push(node); if (nodes.length > 9) nodes.shift();
+    if (m.state !== 'startle') { m.target = { x: Math.max(30 * S, Math.min(W - 30 * S, x)), node: node }; m.state = 'walk'; }
+  });
+
+  /* ---------- loop ---------- */
+  new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(hero);
+  function frame(now) {
+    var dt = Math.min(0.05, (now - last) / 1000 || 0); last = now;
+    if (visible && !document.hidden) { update(dt); draw(); }
+    requestAnimationFrame(frame);
+  }
+  m.target = { x: 0, entrance: true };
+  window.addEventListener('resize', resize);
+  resize();
+  if (reduce) { if (hint) hint.style.display = 'none'; return; }
+  m.target.x = W * 0.28;
+  setTimeout(hideHint, 14000);
+  requestAnimationFrame(frame);
+})();
+</script>
+<script>
+/* Polish pack */
+(function () {
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = window.matchMedia && matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+  /* scroll progress bar */
+  var bar = document.getElementById('progress');
+  function prog() { var h = document.documentElement.scrollHeight - innerHeight; bar.style.transform = 'scaleX(' + (h > 0 ? Math.min(1, scrollY / h) : 0) + ')'; }
+  addEventListener('scroll', prog, { passive: true }); addEventListener('resize', prog); prog();
+
+  /* staggered scroll reveals */
+  var items = [].slice.call(document.querySelectorAll('section h2, .lead-item, .rows > li, .certs li, .pills li, .cite, .group, details'));
+  items.forEach(function (el) {
+    var sib = el.parentElement ? [].indexOf.call(el.parentElement.children, el) : 0;
+    el.style.setProperty('--n', Math.min(sib, 6)); el.classList.add('rv');
+  });
+  if (reduce || !('IntersectionObserver' in window)) { items.forEach(function (el) { el.classList.add('in'); }); }
+  else {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
+    items.forEach(function (el) { io.observe(el); });
+  }
+  if (reduce || !fine) return;
+
+  /* cursor glow (eased follow) */
+  var glow = document.getElementById('glow'), gx = innerWidth / 2, gy = innerHeight / 2, tx = gx, ty = gy;
+  addEventListener('pointermove', function (e) { tx = e.clientX; ty = e.clientY; glow.classList.add('on'); }, { passive: true });
+  document.documentElement.addEventListener('mouseleave', function () { glow.classList.remove('on'); });
+  (function loop() { gx += (tx - gx) * 0.12; gy += (ty - gy) * 0.12; glow.style.transform = 'translate(' + gx + 'px,' + gy + 'px)'; requestAnimationFrame(loop); })();
+
+  /* 3D tilt + glare on the portrait */
+  var pt = document.querySelector('.portrait'), img = pt && pt.querySelector('img');
+  if (pt && img) {
+    pt.addEventListener('pointermove', function (e) {
+      var r = pt.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      img.style.transform = 'rotateY(' + ((x - 0.5) * 14) + 'deg) rotateX(' + ((0.5 - y) * 14) + 'deg) scale(1.03)';
+      pt.style.setProperty('--gx', (x * 100) + '%'); pt.style.setProperty('--gy', (y * 100) + '%'); pt.classList.add('tilting');
+    });
+    pt.addEventListener('pointerleave', function () { img.style.transform = ''; pt.classList.remove('tilting'); });
+  }
+
+  /* magnetic buttons */
+  [].forEach.call(document.querySelectorAll('.btn'), function (b) {
+    b.addEventListener('pointermove', function (e) {
+      var r = b.getBoundingClientRect();
+      b.style.transform = 'translate(' + ((e.clientX - r.left - r.width / 2) * 0.22) + 'px,' + ((e.clientY - r.top - r.height / 2) * 0.35) + 'px)';
+    });
+    b.addEventListener('pointerleave', function () { b.style.transform = ''; });
+  });
+})();
+</script>
+
+<script>
+/* Twin simulator */
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var cv = $('simChart'); if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d'), reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var sl = { sensory: $('sSensory'), social: $('sSocial'), routine: $('sRoutine'), support: $('sSupport') };
+  var out = { sensory: $('oSensory'), social: $('oSocial'), routine: $('oRoutine'), support: $('oSupport') };
+  var N = 120, hist = [], strain = 0.2, T = 0, acc = 0, visible = false, W = 0, H = 0, lastState = '';
+  for (var i = 0; i < N; i++) hist.push(0.8);
+
+  var STATES = [
+    { max: 0.25, name: 'Calm', color: '#1E2C8A', mouth: 'M42 58 Q50 64 58 58',
+      tip: 'No change needed. Keep the current routine.',
+      conv: '"You are doing well. Next up is reading."', vr: 'Standing by', beh: 'Steady, settled' },
+    { max: 0.5, name: 'Engaged', color: '#2F49B8', mouth: 'M43 59 L57 59',
+      tip: 'Going well. A visual schedule can keep things predictable.',
+      conv: '"Here is your schedule for the next hour."', vr: 'Standing by', beh: 'Active, focused' },
+    { max: 0.75, name: 'Strained', color: '#B45309', mouth: 'M42 61 Q50 56 58 61',
+      tip: 'Lower sensory input and offer a short, predictable check-in.',
+      conv: '"Would you like a short break? I will stay here."', vr: 'Calm space ready', beh: 'Tension building' },
+    { max: 9, name: 'Overloaded', color: '#B91C1C', mouth: 'M41 62 Q50 54 59 62',
+      tip: 'Pause the task, move somewhere calm, and use short, simple phrases.',
+      conv: '"Let us pause. Breathe with me. One step at a time."', vr: 'Calm space active', beh: 'Overwhelmed' }
+  ];
+
+  function val(k) { return +sl[k].value / 100; }
+  function targetStrain() {
+    var load = 0.42 * val('sensory') + 0.28 * val('social') + 0.30 * val('routine');
+    return Math.max(0, Math.min(1, load * 1.25 - val('support') * 0.45));
+  }
+  function stateOf(s) { for (var i = 0; i < STATES.length; i++) if (s < STATES[i].max) return STATES[i]; return STATES[3]; }
+
+  function size() {
+    var r = cv.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2);
+    W = r.width; H = r.height; cv.width = Math.round(W * d); cv.height = Math.round(H * d); ctx.setTransform(d, 0, 0, d, 0, 0); draw();
+  }
+
+  function draw() {
+    var padL = 8, padR = 8, padT = 12, padB = 22, w = W - padL - padR, h = H - padT - padB;
+    function X(i) { return padL + i * (w / (N + 30)); }
+    function Y(v) { return padT + (1 - v) * h; }
+    ctx.clearRect(0, 0, W, H);
+    ctx.font = '11px system-ui,sans-serif'; ctx.fillStyle = '#566073'; ctx.textAlign = 'left';
+    [0, 0.5, 1].forEach(function (g) {
+      ctx.beginPath(); ctx.moveTo(padL, Y(g)); ctx.lineTo(W - padR, Y(g)); ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(30,44,138,.12)'; ctx.stroke();
+    });
+    ctx.fillText('Regulated', padL, padT + 10); ctx.fillText('Overloaded', padL, H - 8);
+    ctx.beginPath();
+    for (var i = 0; i < hist.length; i++) { var x = X(i), y = Y(hist[i]); if (i) ctx.lineTo(x, y); else ctx.moveTo(x, y); }
+    ctx.lineWidth = 2.5; ctx.lineJoin = 'round'; ctx.strokeStyle = '#1E2C8A'; ctx.stroke();
+    var cur = hist[hist.length - 1], goal = 1 - targetStrain();
+    ctx.beginPath(); ctx.setLineDash([5, 5]); ctx.moveTo(X(N - 1), Y(cur));
+    for (var j = 1; j <= 30; j++) { var v = goal + (cur - goal) * Math.exp(-j / 14); ctx.lineTo(X(N - 1 + j), Y(v)); }
+    ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(30,44,138,.6)'; ctx.stroke(); ctx.setLineDash([]);
+    ctx.beginPath(); ctx.arc(X(N - 1), Y(cur), 5, 0, 6.2832); ctx.fillStyle = '#fff'; ctx.fill(); ctx.lineWidth = 2.5; ctx.strokeStyle = '#1E2C8A'; ctx.stroke();
+    ctx.fillStyle = '#566073'; ctx.textAlign = 'right'; ctx.fillText('now', X(N - 1) + 8, H - 8);
+  }
+
+  function render() {
+    var s = stateOf(strain), tg = targetStrain(), diff = tg - strain;
+    if (s.name !== lastState) {
+      lastState = s.name;
+      $('simState').textContent = s.name; $('simState').style.color = s.color; $('simTip').textContent = s.tip;
+      $('core').style.fill = s.color; $('mouth').setAttribute('d', s.mouth);
+      $('tConv').textContent = s.conv; $('tVR').textContent = s.vr; $('tBeh').textContent = s.beh;
+      $('mVR').classList.toggle('on', s.name === 'Strained' || s.name === 'Overloaded');
+      $('mConv').classList.toggle('on', s.name !== 'Calm');
+      $('mBeh').classList.add('on');
+    }
+    $('tPred').textContent = Math.abs(diff) < 0.04 ? 'Forecast: steady' : (diff > 0 ? 'Forecast: strain rising' : 'Forecast: strain easing');
+    $('mPred').classList.toggle('on', Math.abs(diff) >= 0.04);
+    var speed = reduce ? 0 : (2.6 - strain * 1.8);
+    ['ring1', 'ring2'].forEach(function (id, k) {
+      var el = $(id); el.style.stroke = s.color;
+      if (reduce) { el.style.animation = 'none'; return; }
+      el.style.animation = 'twinPulse ' + speed + 's ease-out ' + (k * speed / 2) + 's infinite';
+    });
+  }
+
+  function tick(dt) {
+    T += dt;
+    strain += (targetStrain() - strain) * Math.min(1, dt * 0.9);
+    acc += dt;
+    while (acc >= 0.1) {
+      acc -= 0.1;
+      var noise = (Math.sin(T * 3.1) + Math.sin(T * 7.3) * 0.6) * 0.012;
+      hist.push(Math.max(0, Math.min(1, 1 - strain + noise))); hist.shift();
+    }
+  }
+
+  var last = 0;
+  function frame(now) {
+    var dt = Math.min(0.1, (now - last) / 1000 || 0); last = now;
+    if (visible && !document.hidden) { tick(dt); render(); draw(); }
+    requestAnimationFrame(frame);
+  }
+
+  Object.keys(sl).forEach(function (k) {
+    sl[k].addEventListener('input', function () { out[k].textContent = sl[k].value; });
+  });
+  [].forEach.call(document.querySelectorAll('.presets button'), function (b) {
+    b.addEventListener('click', function () {
+      var v = b.getAttribute('data-p').split(',');
+      ['sensory', 'social', 'routine', 'support'].forEach(function (k, i) { sl[k].value = v[i]; out[k].textContent = v[i]; });
+    });
+  });
+
+  var st = document.createElement('style');
+  st.textContent = '@keyframes twinPulse{0%{transform:scale(.8);opacity:.55}100%{transform:scale(1.55);opacity:0}}';
+  document.head.appendChild(st);
+
+  new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }, { threshold: 0.05 }).observe(cv);
+  window.addEventListener('resize', size);
+  strain = targetStrain(); size(); render(); requestAnimationFrame(frame);
+})();
+</script>
+<script>
+/* Motion graphics pack */
+(function () {
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = window.matchMedia && matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+  /* split the hero name into letters */
+  var h1 = document.querySelector('h1'), letters = [];
+  if (h1) {
+    var txt = h1.textContent; h1.setAttribute('aria-label', txt); h1.textContent = '';
+    for (var i = 0; i < txt.length; i++) {
+      var s = document.createElement('span'); s.className = 'ch'; s.setAttribute('aria-hidden', 'true');
+      s.style.setProperty('--k', i); s.textContent = txt[i] === ' ' ? '\u00A0' : txt[i];
+      h1.appendChild(s); letters.push(s);
+    }
+  }
+  if (reduce || !fine) return;
+
+  /* letters rise and glow near the cursor */
+  var px = -999, py = -999, raf = 0;
+  function paint() {
+    raf = 0;
+    letters.forEach(function (el) {
+      var r = el.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      var d = Math.hypot(px - cx, py - cy), k = Math.max(0, 1 - d / 170);
+      el.style.transform = k ? 'translateY(' + (-k * 22) + 'px) scale(' + (1 + k * 0.1) + ')' : '';
+      el.style.color = k > 0.35 ? '#1E2C8A' : '';
+    });
+  }
+  /* cursor ring */
+  var ring = document.getElementById('cring'), rx = 0, ry = 0, tx = 0, ty = 0;
+  addEventListener('pointermove', function (e) {
+    px = e.clientX; py = e.clientY; tx = e.clientX; ty = e.clientY;
+    if (ring) ring.classList.add('on');
+    if (h1 && !raf) raf = requestAnimationFrame(paint);
+    if (ring) ring.classList.toggle('big', !!e.target.closest('a,button,summary,input,.btn'));
+  }, { passive: true });
+  document.documentElement.addEventListener('mouseleave', function () { px = py = -999; if (ring) ring.classList.remove('on'); if (!raf) raf = requestAnimationFrame(paint); });
+  if (ring) (function loop() { rx += (tx - rx) * 0.18; ry += (ty - ry) * 0.18; ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)'; requestAnimationFrame(loop); })();
+})();
+</script>
+
+<script>
+/* Dark mode toggle with circular reveal */
+(function () {
+  var root = document.documentElement, btn = document.getElementById('themeBtn');
+  if (!btn) return;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function sync() {
+    var dark = root.getAttribute('data-theme') === 'dark';
+    btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+  }
+  function setTheme(next, x, y) {
+    function apply() { root.setAttribute('data-theme', next); try { localStorage.setItem('theme', next); } catch (e) {} sync(); }
+    if (!document.startViewTransition || reduce) { apply(); return; }
+    var r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    var vt = document.startViewTransition(apply);
+    vt.ready.then(function () {
+      root.animate(
+        { clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + r + 'px at ' + x + 'px ' + y + 'px)'] },
+        { duration: 850, easing: 'cubic-bezier(.65,0,.2,1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    });
+  }
+  btn.addEventListener('click', function () {
+    var b = btn.getBoundingClientRect();
+    setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', b.left + b.width / 2, b.top + b.height / 2);
+  });
+  sync();
+})();
+</script>
+
 </body>
 </html>
