@@ -1,0 +1,688 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #fff;
+  color: #000;
+  line-height: 1.6;
+}
+
+/*.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  border-bottom: 1px solid #000;
+}
+
+.nav a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 700;
+}
+*/
+.hero {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.section {
+  padding: 80px 60px;
+}
+
+.section h2 {
+  margin-bottom: 20px;
+  font-size: 32px;
+}
+
+.dark {
+  background: #000;
+  color: #fff;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  border: 1px solid currentColor;
+  padding: 30px;
+  font-size: 20px;
+}
+
+.card span {
+  display: block;
+  font-size: 14px;
+  margin-top: 10px;
+  opacity: 0.7;
+}
+
+.chatbox {
+  margin-top: 20px;
+  padding: 40px;
+  border: 1px dashed #fff;
+  text-align: center;
+}
+
+.card img {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 15px;
+  filter: invert(1); /* perfect for black theme */
+}
+
+.card h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.footer {
+  background: #0f0f10;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  padding: 30px 60px;
+}
+
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-brand {
+  font-size: 14px;
+  color: #f5f5f5;
+  opacity: 0.8;
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.social-links a img {
+  width: 20px;
+  height: 20px;
+  filter: invert(1);
+  opacity: 0.75;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.social-links a:hover img {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+
+
+.section-subtitle {
+  font-size: 14px;
+  opacity: 0.7;
+  margin-bottom: 40px;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+.blog-card {
+  border: 1px solid #000;
+  padding: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.blog-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.blog-category {
+  font-size: 12px;
+  letter-spacing: 1px;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.blog-card h3 {
+  margin: 15px 0;
+  font-size: 20px;
+}
+
+.blog-date {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.blog-link {
+  display: inline-block;
+  margin-top: 40px;
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+  border-bottom: 1px solid #000;
+}
+
+.video-section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.video-section video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: 1;
+}
+
+.video-overlay {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.video-overlay h1 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.video-overlay p {
+  font-size: 18px;
+  opacity: 0.85;
+}
+
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+/* Dark overlay for readability */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  padding: 20px;
+}
+
+.hero-content h1 {
+  font-size: 48px;
+  max-width: 900px;
+  margin-bottom: 15px;
+}
+
+.hero-content p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+
+.contact-section {
+  max-width: 700px;
+  margin: auto;
+}
+
+.contact-subtitle {
+  font-size: 14px;
+  opacity: 0.7;
+  margin-bottom: 30px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 14px;
+  border: 1px solid #000;
+  background: transparent;
+  font-size: 14px;
+}
+
+.contact-form button {
+  padding: 14px;
+  background: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.contact-form button:hover {
+  opacity: 0.85;
+}
+
+.form-status {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.game-box {
+  margin-top: 30px;
+}
+
+.game-box button {
+  margin: 10px 10px 0 0;
+  padding: 10px 20px;
+  border: 1px solid #fff;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.game-box button:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* Top navigation bar */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 18px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+}
+
+
+/* Brand */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: transform 0.6s ease;
+}
+
+.brand-logo {
+  width: 36px;
+  height: 36px;
+  transition: transform 0.6s ease;
+  transform-origin: left center;
+}
+
+.brand-name {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+/* Nav links – brighter */
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 28px;
+  font-size: 15px;
+  font-weight: 500;
+  text-shadow: 0 0 6px rgba(0,0,0,0.6);
+  position: relative;
+}
+
+/* Underline glow on hover */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: #fff;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+
+.hero,
+.video-section {
+  background: linear-gradient(
+    135deg,
+    #0b0b0b,
+    #161616,
+    #0b0b0b
+  );
+}
+
+.team-section {
+  background: #000;
+  color: #fff;
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.team-title {
+  font-size: 40px;
+  margin-bottom: 60px;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 768px) {
+  .team-slider {
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  .team-card {
+    min-width: 100%;
+  }
+}
+
+
+.team-card {
+  width: 500px;
+  min-height: 250px;
+  border: 1px solid #fff;
+  padding: 40px;
+  transition: all 0.5s ease;
+}
+
+.team-card h3 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.role {
+  font-size: 16px;
+  opacity: 0.7;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+.linkedin img {
+  width: 24px;
+  filter: invert(1);
+  transition: 0.3s;
+}
+
+.linkedin img:hover {
+  transform: scale(1.2);
+}
+
+.team-section {
+  position: relative;
+  background: #1f1f1f;
+  color: #fff;
+  padding: 160px 0;
+  overflow: hidden;
+}
+
+.team-section .linkedin-icon {
+  fill: #eae5e5;   /* soft black */
+}
+
+
+/* WebGL canvas */
+#shaderCanvas {
+  position: absolute;
+  inset: 1;
+  z-index: 0;
+}
+
+/* Parallax text layers */
+.parallax-layer {
+  position: absolute;
+  font-size: 200px;
+  font-weight: 900;
+  opacity: 0.03;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.layer-back {
+  top: 30%;
+  left: 10%;
+}
+
+.layer-front {
+  top: 55%;
+  left: 20%;
+}
+
+.team-title {
+  text-align: center;
+  font-size: 44px;
+  margin-bottom: 78px;
+  position: relative;
+  z-index: 1;
+}
+
+.team-slider {
+  display: flex;
+  gap: 50px;
+  overflow-x: auto;
+  padding: 40px 80px;   /* important fix */
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  position: relative;
+  z-index: 1;
+}
+
+.team-slider::-webkit-scrollbar {
+  height: 4px;
+}
+
+.team-slider::-webkit-scrollbar-thumb {
+  background: #1d1d1d;
+}
+
+.team-card {
+  min-width: 250px;
+  flex: 0 0 auto;
+  padding: 32px;
+  border: 1px solid #211f1f;
+  scroll-snap-align: center;
+  cursor: pointer;
+  transition: transform 0.4s ease, background 0.4s ease;
+  background: rgba(31, 31, 31, 0.6);
+}
+
+.team-card:hover {
+  background: #333232;
+  color: #0a0909;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  overflow: hidden;
+}
+
+.modal.active {
+  display: flex;
+}
+
+/* Background Video */
+.modal-video {
+  position: absolute;
+  width: 100%;
+  height: 85%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Dark overlay for readability */
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+  z-index: 1;
+}
+
+/* Glass Card */
+.modal-content {
+  position: relative;
+  z-index: 2;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 50px;
+  max-width: 600px;
+  color: #fff;
+  border-radius: 16px;
+  animation: fadeIn 0.4s ease;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+
+  .team-title {
+    font-size: 36px;
+  }
+
+  .team-slider {
+    padding: 40px;
+    gap: 30px;
+  }
+
+  .team-card {
+    min-width: 220px;
+    padding: 24px;
+  }
+
+  .parallax-layer {
+    font-size: 120px;
+  }
+
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+  .team-section {
+    padding: 100px 0;
+  }
+
+  .team-title {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+
+  .team-slider {
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .team-card {
+    min-width: 85%;
+    padding: 20px;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 30px;
+  }
+
+  .parallax-layer {
+    font-size: 60px;
+    opacity: 0.02;
+  }
+
+}
+
+.team-slider {
+  -webkit-overflow-scrolling: touch;
+}
