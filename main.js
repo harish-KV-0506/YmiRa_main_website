@@ -26,7 +26,7 @@ const BLOGS = [
 const TEAM = [
   { name: 'Harish K V', role: 'Founder',
     desc: 'Founder of YMIRA, a technology and innovation platform. Final-year B.Tech student in Computer Science and Business Systems.',
-    linkedin: 'https://www.linkedin.com/in/harish-k-v10' }
+    linkedin: 'https://www.linkedin.com/in/harish-k-v10' },
     {
     name: 'Janani J',
     role: 'Co-Founder and Content Creator',
