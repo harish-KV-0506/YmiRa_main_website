@@ -30,66 +30,79 @@ const TEAM = [
     {
     name: 'Janani J',
     role: 'Co-Founder and Content Creator',
+       desc: '',
     linkedin: ''
   },
   {
     name: 'Visvasugin .N.R',
     role: 'Digital Studio Head',
+     desc: '',
     linkedin: ''
   },
   {
     name: 'Devipriya P',
     role: 'Head of Projects',
+     desc: '',
     linkedin: ''
   },
   {
     name: 'Gnyanodhaya S',
     role: 'Marketing and Editor',
+     desc: '',
     linkedin: ''
   },
   {
     name: 'Hariprakash R',
     role: 'Content Creator and Developer',
+     desc: '',
     linkedin: ''
   },
   {
     name: 'Praveen P',
     role: 'Video Head and Graphic Designer',
+     desc: '',
     linkedin: ''
   },
   {
     name: 'Arjun J S',
     role: 'Manager and Meme & Arts Department Head',
+     desc: '',
     linkedin: ''
   },
   {
     name: 'Gowtham R',
     role: 'Marketing and Content Actor',
+     desc: '',
     linkedin: ''
   },
   {
     name: 'SRIRAM. M',
     role: 'Editor and Cameraman',
+     desc: '',
     linkedin: ''
   },
   {
     name: 'Narmatha Ravi',
     role: 'Content Creator',
+     desc: '',
     linkedin: ''
   },
   {
     name: 'Dharshini J',
     role: 'Project Developer',
+     desc: '',
     linkedin: ''
   },
   {
     name: 'SHALINI M',
     role: 'Project Developer',
+     desc: '',
     linkedin: ''
   },
   {
     name: 'Abirami C',
     role: 'Project Developer',
+     desc: '',
     linkedin: ''
   }
   // Add more people here: { name:'', role:'', desc:'', linkedin:'' }
