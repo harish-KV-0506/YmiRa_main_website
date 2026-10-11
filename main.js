@@ -27,6 +27,71 @@ const TEAM = [
   { name: 'Harish K V', role: 'Founder',
     desc: 'Founder of YMIRA, a technology and innovation platform. Final-year B.Tech student in Computer Science and Business Systems.',
     linkedin: 'https://www.linkedin.com/in/harish-k-v10' }
+    {
+    name: 'Janani J',
+    role: 'Co-Founder and Content Creator',
+    linkedin: ''
+  },
+  {
+    name: 'Visvasugin .N.R',
+    role: 'Digital Studio Head',
+    linkedin: ''
+  },
+  {
+    name: 'Devipriya P',
+    role: 'Head of Projects',
+    linkedin: ''
+  },
+  {
+    name: 'Gnyanodhaya S',
+    role: 'Marketing and Editor',
+    linkedin: ''
+  },
+  {
+    name: 'Hariprakash R',
+    role: 'Content Creator and Developer',
+    linkedin: ''
+  },
+  {
+    name: 'Praveen P',
+    role: 'Video Head and Graphic Designer',
+    linkedin: ''
+  },
+  {
+    name: 'Arjun J S',
+    role: 'Manager and Meme & Arts Department Head',
+    linkedin: ''
+  },
+  {
+    name: 'Gowtham R',
+    role: 'Marketing and Content Actor',
+    linkedin: ''
+  },
+  {
+    name: 'SRIRAM. M',
+    role: 'Editor and Cameraman',
+    linkedin: ''
+  },
+  {
+    name: 'Narmatha Ravi',
+    role: 'Content Creator',
+    linkedin: ''
+  },
+  {
+    name: 'Dharshini J',
+    role: 'Project Developer',
+    linkedin: ''
+  },
+  {
+    name: 'SHALINI M',
+    role: 'Project Developer',
+    linkedin: ''
+  },
+  {
+    name: 'Abirami C',
+    role: 'Project Developer',
+    linkedin: ''
+  }
   // Add more people here: { name:'', role:'', desc:'', linkedin:'' }
 ];
 const QUESTIONS = [
