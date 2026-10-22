@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gowtham R | Web Developer & IoT Builder</title>
+<meta name="description" content="Portfolio of Gowtham R, B.Tech CSBS student. Java, JavaScript, web development and IoT projects.">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07142A;--surface:#0E2342cc;--tx:#E8F4FF;--muted:#8FB0D0;--cm:#9DBBD8;--accent:#38E1FF;--accent2:#7A5CFF;--oa:#04101F;--line:#1D3B63;--r:14px;--f:'Sora',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--f);line-height:1.65;font-size:1.02rem;overflow-x:hidden}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+#cv{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.wrap{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 24px 80px}
+section{padding:70px 0 6px}
+h1,h2,h3{line-height:1.12;font-weight:800}
+h2{font-size:clamp(1.7rem,4.5vw,2.4rem);margin-bottom:26px}
+h3{font-size:1.12rem}
+p+p{margin-top:12px}
+.progress{position:fixed;top:0;left:0;height:5px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:30}
+
+/* Hero */
+.hero{min-height:92vh;display:grid;grid-template-columns:1fr 280px;gap:30px;align-items:center}
+.hero h1{font-size:clamp(2.7rem,8vw,5.2rem);letter-spacing:-.02em;text-shadow:0 0 28px #38e1ff55}
+.ch{display:inline-block;animation:glowIn .9s ease both;animation-delay:calc(var(--i)*70ms)}
+.role{font-size:clamp(1.05rem,2.4vw,1.4rem);margin:18px 0 28px;color:var(--muted);min-height:3.3em}
+.role strong{color:var(--tx)}
+#typed{color:var(--accent);font-weight:600}
+#typed::after{content:"|";margin-left:2px;animation:blink 1s steps(2) infinite}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-block;padding:12px 22px;border:2px solid var(--tx);border-radius:999px;color:var(--tx);text-decoration:none;font-weight:600;transition:transform .2s,background .2s}
+.btn:hover{transform:translateY(-3px)}
+.btn.main{background:var(--accent);border-color:var(--accent);color:var(--oa)}
+.btn.main:hover{background:#fff;border-color:#fff}
+.btn.sm{padding:8px 18px;font-size:.92rem;border-color:var(--line);color:var(--accent)}
+.btn.sm:hover{border-color:var(--accent)}
+
+/* Profile photo: spinning gradient ring, grayscale to colour, zoom and greeting on hover */
+.photo{position:relative;width:min(250px,62vw);aspect-ratio:1;justify-self:center;transition:transform .15s}
+.photo::before{content:"";position:absolute;inset:-9px;border-radius:50%;background:conic-gradient(var(--accent),var(--accent2),transparent 55%,var(--accent));animation:spin 6s linear infinite}
+.photo:hover::before{animation-duration:1.4s}
+.frame{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:#0E2342;border:5px solid var(--bg)}
+.frame img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05);transition:filter .5s,transform .6s}
+.photo:hover img{filter:none;transform:scale(1.12)}
+.ini{position:absolute;inset:0;display:none;place-items:center;font-size:4.4rem;font-weight:800;color:var(--accent)}
+.photo.missing img{display:none}.photo.missing .ini{display:grid}
+.photo::after{content:"Hi, I'm Gowtham!";position:absolute;left:50%;bottom:-14px;translate:-50% 0;white-space:nowrap;padding:6px 16px;border-radius:999px;background:var(--accent);color:var(--oa);font-size:.85rem;font-weight:600;opacity:0;scale:.6;transition:all .35s cubic-bezier(.34,1.56,.64,1)}
+.photo:hover::after{opacity:1;scale:1}
+
+/* Cards, screenshots */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 10px 40px -14px #38e1ff66;padding:26px;margin-bottom:28px;backdrop-filter:blur(10px)}
+.card ul{margin:12px 0 14px 20px}.card li{margin-bottom:5px;color:var(--cm)}
+.shot{position:relative;display:block;width:100%;aspect-ratio:16/9;margin-bottom:18px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#0A1D38;cursor:zoom-in;padding:0;color:inherit}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .6s}
+.shot:hover img{transform:scale(1.06)}
+.shot.missing{cursor:default;display:grid;place-items:center;border-style:dashed;color:var(--muted);font-size:.9rem;text-align:center;padding:12px}
+.shot.missing img{display:none}
+.shot.missing::after{content:"Add screenshot: " attr(data-file)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0!important;padding:0!important}
+.tags li{margin:0!important;padding:3px 12px;border:1px solid var(--line);border-radius:999px;font-size:.86rem;color:var(--cm)}
+.links{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.demo{margin-top:18px;padding:14px;border:1px dashed var(--cm);border-radius:12px;font-size:.93rem}
+.demo label{display:block;font-weight:600;margin-bottom:8px}
+.demo input{width:100%;accent-color:var(--accent2)}
+.readout{display:flex;justify-content:space-between;gap:12px;margin-top:8px}
+dialog{border:0;background:transparent;max-width:94vw;max-height:94vh;padding:0}
+dialog::backdrop{background:#000d}
+dialog img{display:block;max-width:94vw;max-height:90vh;border-radius:10px;cursor:zoom-out}
+
+/* Rows, stats, skills */
+.row{display:grid;grid-template-columns:150px 1fr;gap:4px 22px;padding:16px 0;border-top:1px solid var(--line)}
+.row:last-child{border-bottom:1px solid var(--line)}
+.row time{color:var(--muted);font-size:.93rem}
+.row p{color:var(--muted);margin-top:3px}
+.stats{display:flex;flex-wrap:wrap;gap:36px;margin-top:30px}
+.stats b{display:block;font-size:clamp(2.4rem,7vw,3.5rem);line-height:1;color:var(--accent)}
+.stats span{color:var(--muted);font-size:.92rem}
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.skills .card{margin:0}.skills p{color:var(--cm);margin-top:6px}
+.mail{font-weight:800;font-size:clamp(1.1rem,4vw,1.8rem);word-break:break-all}
+footer{padding:60px 0 0;color:var(--muted);font-size:.9rem}
+
+/* Motion */
+.js .rv{opacity:0;transform:translateY(26px);filter:blur(8px);transition:all .8s ease}
+.js .rv.in{opacity:1;transform:none;filter:none}
+.card{animation:pulse 4s ease-in-out infinite}
+@keyframes glowIn{from{opacity:0;filter:blur(10px);transform:scale(1.5)}to{opacity:1;filter:none;transform:none}}
+@keyframes pulse{50%{box-shadow:0 10px 50px -10px #38e1ffaa}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes blink{50%{opacity:0}}
+@media (max-width:700px){.hero{grid-template-columns:1fr;min-height:auto;padding:50px 0 10px}.photo{order:-1;width:190px}.row{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}.rv{opacity:1!important;transform:none!important;filter:none!important}}
+</style>
+</head>
+<body>
+<canvas id="cv" aria-hidden="true"></canvas>
+<div class="progress" id="bar" aria-hidden="true"></div>
+
+<main class="wrap">
+  <header class="hero">
+    <div>
+      <h1 id="name">Gowtham R</h1>
+      <p class="role"><strong>I build</strong> <span id="typed">web apps</span><br>and connect them to sensors, data and the cloud.</p>
+      <div class="btns">
+        <a class="btn main" href="Gowtham_R_Resume.pdf" download>Download resume</a>
+        <a class="btn" href="#projects">See my projects</a>
+      </div>
+    </div>
+    <!-- Put your photo in this folder as photo.jpg -->
+    <div class="photo" id="photo">
+      <div class="frame">
+        <img src="photo.jpg" alt="Portrait of Gowtham R" onerror="this.closest('.photo').classList.add('missing')">
+        <span class="ini" aria-hidden="true">GR</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="about">
+    <h2>About me</h2>
+    <p>I'm a B.Tech Computer Science and Business Systems student at K. Ramakrishnan College of Engineering, Trichy (2023 to 2027).</p>
+    <p>I work with Java, JavaScript, HTML, CSS and MySQL. I like projects where software meets the real world, like a health tracker that predicts risk or a bin that reports how full it is. I'm looking for a software development role where I can build practical applications and keep learning.</p>
+    <div class="stats">
+      <div><b data-n="2">2</b><span>Projects built</span></div>
+      <div><b data-n="4">4</b><span>Certifications</span></div>
+      <div><b data-n="1">1</b><span>Internship</span></div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <article class="card">
+      <!-- Put your screenshot at images/diabetes.png -->
+      <button class="shot" type="button" data-file="images/diabetes.png" aria-label="Enlarge screenshot of the diabetes monitoring system">
+        <img src="images/diabetes.png" alt="Screenshot of the diabetes monitoring dashboard" onerror="this.parentNode.classList.add('missing')">
+      </button>
+      <h3>Cloud-Based Diabetes Monitoring and Healthcare Management System</h3>
+      <ul>
+        <li>Web system that monitors diabetes and predicts risk from health parameters.</li>
+        <li>Patients can upload health reports, track readings and book appointments.</li>
+      </ul>
+      <ul class="tags"><li>Python</li><li>TensorFlow</li><li>MySQL</li><li>HTML</li><li>CSS</li><li>Bootstrap</li></ul>
+      <div class="links">
+        <!-- TODO: replace with your real repo link. Add a "Live demo" link the same way if you host it. -->
+        <a class="btn sm" href="https://github.com/YOUR-USERNAME/diabetes-monitoring" target="_blank" rel="noopener">View code on GitHub</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <!-- Put your screenshot or device photo at images/smartbin.png -->
+      <button class="shot" type="button" data-file="images/smartbin.png" aria-label="Enlarge photo of the smart bin project">
+        <img src="images/smartbin.png" alt="Photo of the smart bin with ultrasonic sensor and NodeMCU" onerror="this.parentNode.classList.add('missing')">
+      </button>
+      <h3>IoT-Based Smart Bin Level Detection System</h3>
+      <ul><li>Real-time waste-bin monitoring. An ultrasonic sensor measures the distance to the waste and a NodeMCU sends the level to the Blynk app.</li></ul>
+      <ul class="tags"><li>NodeMCU</li><li>Ultrasonic sensor</li><li>Blynk</li><li>Arduino IDE</li><li>IoT</li></ul>
+      <div class="demo">
+        <label for="dist">Try it: move the distance from the sensor to the waste</label>
+        <input type="range" id="dist" min="2" max="40" value="22">
+        <div class="readout"><span id="distOut">22 cm</span><strong id="stat">Bin is 50% full</strong></div>
+      </div>
+      <div class="links">
+        <a class="btn sm" href="https://github.com/YOUR-USERNAME/smart-bin-iot" target="_blank" rel="noopener">View code on GitHub</a>
+      </div>
+    </article>
+  </section>
+
+  <section id="experience">
+    <h2>Experience and education</h2>
+    <div class="row"><time>May to Jul 2024</time><div><h3>Full Stack Web Development Intern</h3><p>Greensoft Technology. Built responsive pages with HTML and CSS and learned how web applications are designed.</p></div></div>
+    <div class="row"><time>2023 to 2027</time><div><h3>B.Tech, Computer Science and Business Systems</h3><p>K. Ramakrishnan College of Engineering, Trichy. CGPA 7/10.</p></div></div>
+    <div class="row"><time>2022 to 2023</time><div><h3>Higher Secondary (12th)</h3><p>Sri Ramakrishna Matric Hr. Sec. School. 71.5%.</p></div></div>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="skills">
+      <div class="card"><h3>Languages</h3><p>Java, JavaScript, HTML, CSS, MySQL</p></div>
+      <div class="card"><h3>Tools</h3><p>Git, GitHub, VS Code, Figma</p></div>
+      <div class="card"><h3>Working style</h3><p>Problem-solving, analytical thinking, teamwork, quick learning</p></div>
+    </div>
+  </section>
+
+  <section id="certs">
+    <h2>Certifications</h2>
+    <div class="row"><time>2025</time><div><h3>Microsoft Azure Fundamentals</h3><p>Azure services, security and infrastructure.</p></div></div>
+    <div class="row"><time>2025</time><div><h3>Programming in Java (NPTEL, Elite)</h3><p>Java and object-oriented programming.</p></div></div>
+    <div class="row"><time>2025</time><div><h3>Internet of Things (NPTEL)</h3><p>Sensors, protocols and connected devices.</p></div></div>
+    <div class="row"><time>2023</time><div><h3>Cloud Computing (Technook)</h3><p>Cloud basics, virtualization and service models.</p></div></div>
+  </section>
+
+  <section id="contact">
+    <h2>Let's talk</h2>
+    <p style="margin-bottom:14px">Open to software development roles and internships.</p>
+    <p><a class="mail" href="mailto:gowthamr0515@gmail.com">gowthamr0515@gmail.com</a></p>
+    <div class="btns" style="margin-top:22px">
+      <a class="btn main" href="Gowtham_R_Resume.pdf" download>Download resume</a>
+      <!-- TODO: replace YOUR-USERNAME with your real GitHub and LinkedIn names -->
+      <a class="btn" href="https://github.com/YOUR-USERNAME" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/YOUR-USERNAME" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </section>
+  <footer>&copy; <span id="yr"></span> Gowtham R. Built with HTML, CSS and JavaScript.</footer>
+</main>
+
+<dialog id="lb" aria-label="Enlarged screenshot"><img id="lbImg" alt=""></dialog>
+
+<script>
+const root=document.documentElement,RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* Connected-nodes background */
+const cv=document.getElementById('cv'),c=cv.getContext('2d');
+let W,H,nodes=[],mx=-999,my=-999;
+function size(){W=cv.width=innerWidth;H=cv.height=innerHeight;nodes=[];
+  for(let i=0;i<Math.min(80,Math.floor(W*H/15000));i++)nodes.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5})}
+function frame(){
+  c.clearRect(0,0,W,H);c.fillStyle=c.strokeStyle='#38E1FF';
+  nodes.forEach((a,i)=>{
+    a.x+=a.vx;a.y+=a.vy;if(a.x<0||a.x>W)a.vx*=-1;if(a.y<0||a.y>H)a.vy*=-1;
+    c.globalAlpha=.8;c.beginPath();c.arc(a.x,a.y,1.8,0,7);c.fill();
+    for(let j=i+1;j<nodes.length;j++){const b=nodes[j],d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<125){c.globalAlpha=(1-d/125)*.45;c.beginPath();c.moveTo(a.x,a.y);c.lineTo(b.x,b.y);c.stroke()}}
+    const dm=Math.hypot(a.x-mx,a.y-my);
+    if(dm<170){c.globalAlpha=(1-dm/170)*.8;c.beginPath();c.moveTo(a.x,a.y);c.lineTo(mx,my);c.stroke()}
+  });
+  requestAnimationFrame(frame);
+}
+addEventListener('resize',size);
+addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY});
+size();if(!RM)requestAnimationFrame(frame);
+
+/* Name letters */
+const h=document.getElementById('name');h.textContent='';h.setAttribute('aria-label','Gowtham R');
+[...'Gowtham R'].forEach((ch,i)=>{const s=document.createElement('span');s.className='ch';s.setAttribute('aria-hidden','true');s.style.setProperty('--i',i);s.textContent=ch===' '?'\u00A0':ch;h.appendChild(s)});
+
+/* Typing effect */
+const words=['web apps','IoT systems','healthcare tools','cloud projects'],typed=document.getElementById('typed');
+let wi=0,ci=0,del=false;
+function type(){const w=words[wi];ci+=del?-1:1;typed.textContent=w.slice(0,ci);let d=del?45:85;
+  if(!del&&ci===w.length){del=true;d=1400}else if(del&&ci===0){del=false;wi=(wi+1)%words.length;d=350}
+  setTimeout(type,d)}
+if(!RM)setTimeout(type,1500);
+
+/* Reveal on scroll, count-up */
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);if(e.target.classList.contains('stats'))count()}}),{threshold:.12});
+function count(){document.querySelectorAll('[data-n]').forEach(el=>{const n=+el.dataset.n;let k=0;
+  const step=()=>{k++;el.textContent=k;if(k<n)setTimeout(step,260)};
+  if(RM)return;el.textContent=0;setTimeout(step,200)})}
+if(!RM)document.querySelectorAll('section h2,.card,.row,.stats').forEach(e=>{e.classList.add('rv');io.observe(e)});
+
+/* Photo tilts toward the mouse */
+const photo=document.getElementById('photo');
+if(!RM&&matchMedia('(hover:hover)').matches){
+  photo.addEventListener('pointermove',e=>{const r=photo.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+    photo.style.transform=`perspective(700px) rotateY(${x*18}deg) rotateX(${-y*18}deg)`});
+  photo.addEventListener('pointerleave',()=>photo.style.transform='');
+  /* 3D tilt on cards */
+  document.querySelectorAll('.card').forEach(el=>{
+    el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      el.style.transition='transform .1s';el.style.transform=`perspective(900px) rotateY(${x*5}deg) rotateX(${-y*5}deg) translateY(-3px)`});
+    el.addEventListener('pointerleave',()=>{el.style.transition='transform .5s';el.style.transform=''});
+  });
+}
+
+/* Click a screenshot to enlarge it */
+const lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg');
+document.querySelectorAll('.shot').forEach(b=>b.addEventListener('click',()=>{
+  if(b.classList.contains('missing'))return;
+  const i=b.querySelector('img');lbImg.src=i.src;lbImg.alt=i.alt;lb.showModal();
+}));
+lb.addEventListener('click',()=>lb.close());
+
+/* Progress bar, bin demo, year */
+const bar=document.getElementById('bar');
+addEventListener('scroll',()=>{const m=root.scrollHeight-innerHeight;bar.style.width=(m>0?scrollY/m*100:0)+'%'},{passive:true});
+const dist=document.getElementById('dist'),out=document.getElementById('distOut'),stat=document.getElementById('stat');
+function bin(){const d=+dist.value,l=Math.round((40-d)/40*100);out.textContent=d+' cm';stat.textContent=l>=80?'Bin is '+l+'% full. Time to empty it.':'Bin is '+l+'% full'}
+dist.addEventListener('input',bin);bin();
+document.getElementById('yr').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
