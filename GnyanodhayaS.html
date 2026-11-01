@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gnyanodhaya S — Portfolio</title>
+<meta name="description" content="Portfolio of Gnyanodhaya S — Computer Science & Business Systems student and aspiring software developer." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<style>
+  :root{
+    --bg:#0b0f1a;
+    --bg2:#0f1524;
+    --card:#141c2f;
+    --border:#233048;
+    --text:#e6ecf5;
+    --muted:#94a3b8;
+    --accent:#38bdf8;
+    --accent2:#a78bfa;
+    --gradient:linear-gradient(90deg,#38bdf8,#a78bfa);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+  h1,h2,h3,h4{font-family:'Poppins',sans-serif;line-height:1.3}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%}
+  .container{max-width:1100px;margin:0 auto;padding:0 24px}
+  section{padding:90px 0;position:relative}
+  .section-title{font-size:2rem;font-weight:700;margin-bottom:8px}
+  .section-title span{background:var(--gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .section-sub{color:var(--muted);margin-bottom:48px;max-width:600px}
+
+  /* ---------- NAV ---------- */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(11,15,26,.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  .nav-inner{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
+  .logo{font-family:'Poppins';font-weight:700;font-size:1.2rem}
+  .logo span{background:var(--gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{color:var(--muted);font-size:.92rem;font-weight:500;transition:color .3s}
+  .nav-links a:hover{color:var(--accent)}
+  .hamburger{display:none;background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer}
+
+  /* ---------- HERO ---------- */
+  .hero{min-height:100vh;display:flex;align-items:center;padding-top:80px}
+  .hero::before{content:"";position:absolute;top:-120px;right:-120px;width:480px;height:480px;background:radial-gradient(circle,rgba(56,189,248,.15),transparent 70%);pointer-events:none}
+  .hero::after{content:"";position:absolute;bottom:-120px;left:-120px;width:480px;height:480px;background:radial-gradient(circle,rgba(167,139,250,.12),transparent 70%);pointer-events:none}
+  .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:60px;align-items:center;position:relative;z-index:1}
+  .hero-badge{display:inline-block;padding:6px 16px;border:1px solid var(--border);border-radius:999px;color:var(--accent);font-size:.85rem;font-weight:500;margin-bottom:20px;background:rgba(56,189,248,.06)}
+  .hero h1{font-size:3rem;font-weight:800;margin-bottom:12px}
+  .hero h1 span{background:var(--gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .typing{font-family:'Poppins';font-size:1.3rem;font-weight:600;color:var(--accent2);min-height:2.2rem;margin-bottom:20px}
+  .typing .cursor{animation:blink 1s step-end infinite}
+  @keyframes blink{50%{opacity:0}}
+  .hero p.lead{color:var(--muted);max-width:520px;margin-bottom:32px}
+  .btn-row{display:flex;gap:16px;flex-wrap:wrap}
+  .btn{padding:13px 28px;border-radius:10px;font-weight:600;font-size:.95rem;transition:transform .3s,box-shadow .3s;display:inline-flex;align-items:center;gap:8px}
+  .btn-primary{background:var(--gradient);color:#0b0f1a}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(56,189,248,.35)}
+  .btn-outline{border:1px solid var(--border);color:var(--text)}
+  .btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px)}
+  .hero-socials{display:flex;gap:18px;margin-top:36px}
+  .hero-socials a{width:44px;height:44px;border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .3s}
+  .hero-socials a:hover{color:var(--accent);border-color:var(--accent);transform:translateY(-4px)}
+  .photo-wrap{position:relative;width:300px;height:300px;justify-self:center}
+  .photo-wrap::before{content:"";position:absolute;inset:-10px;border-radius:50%;background:var(--gradient);filter:blur(22px);opacity:.4}
+  .photo-wrap img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:50%;border:4px solid var(--card);z-index:1}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+  .about-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px}
+  .about-card h3{margin-bottom:12px;color:var(--accent)}
+  .about-card p{color:var(--muted);font-size:.95rem}
+  .info-list{list-style:none;margin-top:16px}
+  .info-list li{display:flex;gap:10px;padding:6px 0;color:var(--muted);font-size:.95rem}
+  .info-list i{color:var(--accent);margin-top:6px}
+
+  /* ---------- SKILLS ---------- */
+  #skills{background:var(--bg2)}
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px}
+  .skill-cat{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;transition:transform .3s,border-color .3s}
+  .skill-cat:hover{transform:translateY(-6px);border-color:var(--accent)}
+  .skill-cat i{font-size:1.6rem;background:var(--gradient);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:14px}
+  .skill-cat h3{font-size:1.05rem;margin-bottom:16px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{padding:7px 14px;border-radius:999px;background:rgba(56,189,248,.08);border:1px solid var(--border);font-size:.85rem;color:var(--text)}
+
+  /* ---------- EXPERIENCE ---------- */
+  .timeline{position:relative;padding-left:32px}
+  .timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--border)}
+  .tl-item{position:relative;margin-bottom:36px}
+  .tl-item::before{content:"";position:absolute;left:-32px;top:6px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:3px solid var(--accent)}
+  .tl-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px}
+  .tl-card h3{font-size:1.1rem}
+  .tl-card h4{color:var(--accent);font-size:.95rem;font-weight:500;margin:4px 0 6px}
+  .tl-date{color:var(--muted);font-size:.85rem;margin-bottom:10px}
+  .tl-card p{color:var(--muted);font-size:.95rem}
+  .tag{display:inline-block;margin-top:12px;margin-right:8px;padding:4px 12px;border-radius:999px;font-size:.78rem;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.3);color:var(--accent2)}
+
+  /* ---------- PROJECTS ---------- */
+  #projects{background:var(--bg2)}
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:28px}
+  .project-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:32px;display:flex;flex-direction:column;transition:transform .3s,border-color .3s}
+  .project-card:hover{transform:translateY(-8px);border-color:var(--accent)}
+  .project-icon{width:56px;height:56px;border-radius:14px;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--accent);margin-bottom:20px}
+  .project-card h3{font-size:1.2rem;margin-bottom:12px}
+  .project-card p{color:var(--muted);font-size:.93rem;margin-bottom:14px;flex-grow:1}
+  .project-card ul{margin:0 0 18px 18px;color:var(--muted);font-size:.9rem}
+  .project-card ul li{margin-bottom:6px}
+  .tech-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+  .tech{padding:4px 12px;border-radius:999px;font-size:.78rem;background:var(--bg);border:1px solid var(--border);color:var(--accent)}
+  .project-links a{display:inline-flex;align-items:center;gap:8px;font-size:.9rem;font-weight:600;color:var(--accent)}
+  .project-links a:hover{text-decoration:underline}
+
+  /* ---------- EDUCATION ---------- */
+  .edu-grid{display:grid;gap:20px}
+  .edu-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px;display:flex;gap:22px;align-items:flex-start;transition:border-color .3s}
+  .edu-card:hover{border-color:var(--accent2)}
+  .edu-icon{width:52px;height:52px;flex-shrink:0;border-radius:14px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);display:flex;align-items:center;justify-content:center;color:var(--accent2);font-size:1.2rem}
+  .edu-card h3{font-size:1.05rem}
+  .edu-card .meta{color:var(--muted);font-size:.9rem;margin-top:4px}
+  .edu-score{display:inline-block;margin-top:10px;padding:4px 14px;border-radius:999px;font-size:.82rem;font-weight:600;background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.25);color:var(--accent)}
+
+  /* ---------- CERTIFICATIONS ---------- */
+  #certifications{background:var(--bg2)}
+  .cert-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:28px}
+  .cert-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:30px}
+  .cert-card h3{margin-bottom:18px;font-size:1.1rem;color:var(--accent)}
+  .cert-card ul{list-style:none}
+  .cert-card li{padding:8px 0;color:var(--muted);font-size:.93rem;display:flex;gap:12px;align-items:flex-start;border-bottom:1px dashed var(--border)}
+  .cert-card li:last-child{border-bottom:none}
+  .cert-card li i{color:var(--accent2);margin-top:5px}
+  .stars-chips{display:flex;flex-wrap:wrap;gap:10px}
+  .stars-chips .chip{background:rgba(167,139,250,.08)}
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:24px;margin-bottom:50px}
+  .contact-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;transition:transform .3s,border-color .3s}
+  .contact-card:hover{transform:translateY(-6px);border-color:var(--accent)}
+  .contact-card i{font-size:1.5rem;color:var(--accent);margin-bottom:14px}
+  .contact-card h3{font-size:1rem;margin-bottom:6px}
+  .contact-card p,.contact-card a{color:var(--muted);font-size:.9rem;word-break:break-word}
+  .contact-card a:hover{color:var(--accent)}
+  .contact-cta{text-align:center}
+  .contact-cta p{color:var(--muted);max-width:520px;margin:0 auto 28px}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--border);padding:28px 0;text-align:center;color:var(--muted);font-size:.88rem}
+  footer i{color:#f43f5e}
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:860px){
+    .hero-grid,.about-grid,.cert-grid{grid-template-columns:1fr}
+    .hero{padding-top:110px;text-align:center}
+    .hero p.lead{margin-left:auto;margin-right:auto}
+    .btn-row,.hero-socials{justify-content:center}
+    .photo-wrap{margin-top:20px;width:240px;height:240px}
+    .nav-links{position:fixed;top:64px;right:-100%;flex-direction:column;background:var(--bg2);width:70%;height:100vh;padding:40px 30px;gap:22px;transition:right .4s;border-left:1px solid var(--border)}
+    .nav-links.open{right:0}
+    .hamburger{display:block}
+    .hero h1{font-size:2.2rem}
+    section{padding:70px 0}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav>
+  <div class="nav-inner">
+    <a href="#home" class="logo"><span>Gnyanodhaya</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="home">
+  <div class="container hero-grid">
+    <div>
+      <span class="hero-badge"><i class="fas fa-circle" style="font-size:.5rem;vertical-align:middle;margin-right:8px"></i>Open to Opportunities</span>
+      <h1>Hi, I'm <span>Gnyanodhaya S</span></h1>
+      <div class="typing"><span id="typed"></span><span class="cursor">|</span></div>
+      <p class="lead">Final-year Computer Science & Business Systems student passionate about building real-world software — from AI-powered accessibility tools to full-stack web applications.</p>
+      <div class="btn-row">
+        <a href="#projects" class="btn btn-primary"><i class="fas fa-code"></i> View My Work</a>
+        <a href="#contact" class="btn btn-outline"><i class="fas fa-paper-plane"></i> Contact Me</a>
+      </div>
+      <div class="hero-socials">
+        <a href="https://github.com/Gnyanodhaya" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/Gnyanodhaya-Shanmugam" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="mailto:gnyanodhaya@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+    <div class="photo-wrap">
+      <img src="Gnyanodhaya_photo.png" alt="Gnyanodhaya S" />
+    </div>
+  </div>
+</header>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="container">
+    <h2 class="section-title reveal">About <span>Me</span></h2>
+    <p class="section-sub reveal">A quick introduction to who I am and what drives me.</p>
+    <div class="about-grid">
+      <div class="about-card reveal">
+        <h3><i class="fas fa-user"></i> Who I Am</h3>
+        <p>I'm a final-year Computer Science and Business Systems student at K. Ramakrishnan College of Engineering, Trichy, with hands-on internship experience in software development and data analysis. I enjoy combining technical skills with business thinking to solve meaningful problems.</p>
+        <p style="margin-top:12px">I'm a continuous learner — whether it's deep learning, cloud computing, or full-stack development, I'm always exploring something new.</p>
+      </div>
+      <div class="about-card reveal">
+        <h3><i class="fas fa-circle-info"></i> Quick Info</h3>
+        <ul class="info-list">
+          <li><i class="fas fa-graduation-cap"></i> B.E. Computer Science & Business Systems (2023–2027)</li>
+          <li><i class="fas fa-location-dot"></i> Trichy, Tamil Nadu, India</li>
+          <li><i class="fas fa-language"></i> English, Tamil</li>
+          <li><i class="fas fa-briefcase"></i> Internships: ICMR-NIE & Hitakey Tech Solution</li>
+          <li><i class="fas fa-lightbulb"></i> Interests: AI/ML, Web Development, Data Analysis</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section id="skills">
+  <div class="container">
+    <h2 class="section-title reveal">My <span>Skills</span></h2>
+    <p class="section-sub reveal">Technologies and tools I work with.</p>
+    <div class="skills-grid">
+      <div class="skill-cat reveal">
+        <i class="fas fa-code"></i>
+        <h3>Programming Languages</h3>
+        <div class="chips">
+          <span class="chip">Java</span><span class="chip">Python</span><span class="chip">C</span><span class="chip">HTML</span><span class="chip">CSS</span>
+        </div>
+      </div>
+      <div class="skill-cat reveal">
+        <i class="fas fa-toolbox"></i>
+        <h3>Tools & Platforms</h3>
+        <div class="chips">
+          <span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">Figma</span><span class="chip">Canva</span>
+        </div>
+      </div>
+      <div class="skill-cat reveal">
+        <i class="fas fa-database"></i>
+        <h3>Core Computer Science</h3>
+        <div class="chips">
+          <span class="chip">DBMS</span><span class="chip">Cloud Computing</span>
+        </div>
+      </div>
+      <div class="skill-cat reveal">
+        <i class="fas fa-wand-magic-sparkles"></i>
+        <h3>Creative & Other</h3>
+        <div class="chips">
+          <span class="chip">Video Editing</span><span class="chip">Digital Marketing</span><span class="chip">Presentation</span><span class="chip">Collaboration</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section id="experience">
+  <div class="container">
+    <h2 class="section-title reveal">Internship <span>Experience</span></h2>
+    <p class="section-sub reveal">Where I've gained real-world, hands-on experience.</p>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-card">
+          <h3>Data Analyst Intern</h3>
+          <h4>ICMR — National Institute of Epidemiology (ICMR-NIE)</h4>
+          <div class="tl-date"><i class="far fa-calendar"></i> Feb 6 – Feb 27, 2026 &nbsp;|&nbsp; Offline</div>
+          <p>Worked on data analysis tasks at a premier national research institute, applying analytical and Python skills to real epidemiological data.</p>
+          <span class="tag">Data Analysis</span><span class="tag">Python</span>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-card">
+          <h3>Python Full Stack Developer Intern</h3>
+          <h4>Hitakey Tech Solution Pvt Ltd</h4>
+          <div class="tl-date"><i class="far fa-calendar"></i> Jul – Aug 2025 &nbsp;|&nbsp; Offline</div>
+          <p>Gained foundational full-stack development experience building and working with web applications using Python and related technologies.</p>
+          <span class="tag">Python</span><span class="tag">Full Stack</span><span class="tag">Web Development</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section id="projects">
+  <div class="container">
+    <h2 class="section-title reveal">Featured <span>Projects</span></h2>
+    <p class="section-sub reveal">Things I've built with curiosity and code.</p>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-icon"><i class="fas fa-hands"></i></div>
+        <h3>VisionSpeak — Real-Time AI Sign Language Translator</h3>
+        <ul>
+          <li>Real-time computer vision system using OpenCV & MediaPipe that extracts 84 hand landmarks to translate ASL & ISL into continuous text.</li>
+          <li>Trained a TensorFlow/Keras deep learning model achieving <b style="color:var(--accent)">&gt;94% accuracy</b>.</li>
+          <li>Integrated a multithreaded Text-to-Speech engine for instant, lag-free vocal communication.</li>
+        </ul>
+        <div class="tech-row">
+          <span class="tech">Python</span><span class="tech">TensorFlow</span><span class="tech">OpenCV</span><span class="tech">MediaPipe</span><span class="tech">Scikit-learn</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Gnyanodhaya" target="_blank"><i class="fab fa-github"></i> View on GitHub</a>
+        </div>
+      </div>
+
+      <!-- ⚠️ UPDATE THIS: I wrote a placeholder description for SkillMatch AI based on the name. Replace it with the real details from your GitHub repo! -->
+      <div class="project-card reveal">
+        <div class="project-icon"><i class="fas fa-robot"></i></div>
+        <h3>SkillMatch AI</h3>
+        <p>An AI-powered platform that analyzes a user's skills and intelligently matches them with suitable job roles and career opportunities, helping bridge the gap between talent and the right role.</p>
+        <div class="tech-row">
+          <span class="tech">Python</span><span class="tech">AI / ML</span><span class="tech">HTML</span><span class="tech">CSS</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Gnyanodhaya" target="_blank"><i class="fab fa-github"></i> View on GitHub</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= EDUCATION ================= -->
+<section id="education">
+  <div class="container">
+    <h2 class="section-title reveal">Educa<span>tion</span></h2>
+    <p class="section-sub reveal">My academic journey.</p>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-icon"><i class="fas fa-graduation-cap"></i></div>
+        <div>
+          <h3>K. Ramakrishnan College of Engineering, Trichy</h3>
+          <p class="meta">B.E. — Computer Science and Business Systems &nbsp;•&nbsp; 2023 – 2027</p>
+          <span class="edu-score">CGPA: 7.48</span>
+        </div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-icon"><i class="fas fa-school"></i></div>
+        <div>
+          <h3>St. Anne's Girls' Higher Secondary School, Trichy</h3>
+          <p class="meta">Senior Secondary (Class XII), State Board &nbsp;•&nbsp; 2022 – 2023</p>
+          <span class="edu-score">72.83%</span>
+        </div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-icon"><i class="fas fa-school"></i></div>
+        <div>
+          <h3>St. Anne's Girls' Higher Secondary School, Trichy</h3>
+          <p class="meta">Secondary (Class X), State Board &nbsp;•&nbsp; 2020 – 2021</p>
+          <span class="edu-score">100% (All Pass)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CERTIFICATIONS ================= -->
+<section id="certifications">
+  <div class="container">
+    <h2 class="section-title reveal">Certifications & <span>Achievements</span></h2>
+    <p class="section-sub reveal">Recognitions from NPTEL and beyond.</p>
+    <div class="cert-grid">
+      <div class="cert-card reveal">
+        <h3><i class="fas fa-certificate"></i> NPTEL Certifications</h3>
+        <ul>
+          <li><i class="fas fa-check"></i> Database and Management System</li>
+          <li><i class="fas fa-check"></i> Data Analytics with Python</li>
+          <li><i class="fas fa-check"></i> Introduction to IoT</li>
+          <li><i class="fas fa-check"></i> Cloud Computing</li>
+          <li><i class="fas fa-check"></i> Big Data Computing</li>
+          <li><i class="fas fa-check"></i> Natural Language Processing</li>
+          <li><i class="fas fa-check"></i> Programming in Java</li>
+          <li><i class="fas fa-check"></i> Programming in Generative AI</li>
+          <li><i class="fas fa-check"></i> Programming DSA using Python</li>
+        </ul>
+      </div>
+      <div class="cert-card reveal">
+        <h3><i class="fas fa-star"></i> NPTEL Stars</h3>
+        <div class="stars-chips">
+          <span class="chip">Discipline Star</span>
+          <span class="chip">Star Believer</span>
+          <span class="chip">Motivated Learner</span>
+          <span class="chip">Domain (Programming)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact">
+  <div class="container">
+    <h2 class="section-title reveal">Get In <span>Touch</span></h2>
+    <p class="section-sub reveal">Have an opportunity or just want to say hi? My inbox is always open.</p>
+    <div class="contact-grid">
+      <a href="mailto:gnyanodhaya@gmail.com" class="contact-card reveal">
+        <i class="fas fa-envelope"></i>
+        <h3>Email</h3>
+        <p>gnyanodhaya@gmail.com</p>
+      </a>
+      <a href="https://www.linkedin.com/in/Gnyanodhaya-Shanmugam" target="_blank" class="contact-card reveal">
+        <i class="fab fa-linkedin"></i>
+        <h3>LinkedIn</h3>
+        <p>Gnyanodhaya Shanmugam</p>
+      </a>
+      <a href="https://github.com/Gnyanodhaya" target="_blank" class="contact-card reveal">
+        <i class="fab fa-github"></i>
+        <h3>GitHub</h3>
+        <p>@Gnyanodhaya</p>
+      </a>
+    </div>
+    <div class="contact-cta reveal">
+      <p>I'm currently open to internships and entry-level opportunities in software development and data analysis. Let's build something great together!</p>
+      <a href="mailto:gnyanodhaya@gmail.com" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Say Hello</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Designed & Built with <i class="fas fa-heart"></i> by Gnyanodhaya S &nbsp;•&nbsp; © 2026</p>
+</footer>
+
+<script>
+  // ----- Mobile menu -----
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // ----- Typewriter effect -----
+  const roles = ["Aspiring Software Developer", "Data Analyst", "AI & ML Enthusiast", "Python Full Stack Learner"];
+  let roleIndex = 0, charIndex = 0, deleting = false;
+  const typedEl = document.getElementById('typed');
+  function type() {
+    const current = roles[roleIndex];
+    typedEl.textContent = current.substring(0, charIndex);
+    if (!deleting && charIndex < current.length) { charIndex++; setTimeout(type, 80); }
+    else if (deleting && charIndex > 0) { charIndex--; setTimeout(type, 40); }
+    else if (!deleting) { deleting = true; setTimeout(type, 1800); }
+    else { deleting = false; roleIndex = (roleIndex + 1) % roles.length; setTimeout(type, 400); }
+  }
+  type();
+
+  // ----- Scroll reveal animation -----
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
