@@ -298,6 +298,28 @@ html[data-theme="dark"] .theme-btn svg{transform:rotate(360deg)}
   .js:not(.is-ready) .rise{opacity:1;transform:none}
 }
 @media print{ #intro,.nav{display:none!important} .js.intro-lock body{overflow:visible} }
+
+  /* ---------- Projects + live preview ---------- */
+.proj-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.proj{background:#fff;border:1px solid var(--rule);border-radius:6px;padding:22px;display:flex;flex-direction:column;transition:border-color .25s,transform .25s}
+.proj:hover{border-color:var(--ink);transform:translateY(-3px)}
+.proj .when{font:500 .85rem var(--sans);color:var(--slate);margin:0 0 6px}
+.proj h3{font-size:1.2rem;margin:0 0 .4em}
+.proj p{font-size:1rem;line-height:1.5;max-width:none;margin:0 0 1.1em}
+.proj-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.btn.sm{font-size:.85rem;padding:9px 16px;cursor:pointer;font-family:var(--sans)}
+button.btn.solid{border:1.5px solid var(--ink)}
+html[data-theme="dark"] .proj{background:#141935}
+
+dialog#pv{width:min(1100px,94vw);height:min(86vh,800px);max-width:none;max-height:none;padding:0;border:1px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--graphite);overflow:hidden}
+dialog#pv[open]{display:flex;flex-direction:column}
+dialog#pv::backdrop{background:rgba(13,16,32,.6);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.pv-bar{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--rule)}
+.pv-title{flex:1;min-width:0;font:600 .95rem var(--sans);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pv-hint{font:400 .78rem var(--sans);color:var(--slate)}
+.pv-frame{flex:1;width:100%;border:0;background:#fff}
+@media (max-width:820px){.proj-grid{grid-template-columns:1fr}.pv-hint{display:none}}
+  
 </style>
 <noscript><style>#intro{display:none!important}.rise{opacity:1!important;transform:none!important}</style></noscript>
 </head>
@@ -362,6 +384,7 @@ html[data-theme="dark"] .theme-btn svg{transform:rotate(360deg)}
         <li><a href="#research">Research</a></li>
         <li><a href="#patents">Patents</a></li>
         <li><a href="#recognition">Recognition</a></li>
+        <li><a href="#projects">Projects</a></li>
         <li><a href="#certifications">Certifications</a></li>
         <li><a href="#blog">Blog</a></li>
         <li><a href="#simulator">Simulator</a></li>
@@ -615,6 +638,110 @@ html[data-theme="dark"] .theme-btn svg{transform:rotate(360deg)}
       </div>
     </div>
   </section>
+
+  <section id="projects">
+  <div class="wrap sec">
+    <h2>Projects</h2>
+    <div>
+      <p>Things I have built and am building. Use Preview to try a project right here, or Open to visit it on its own.</p>
+      <div class="proj-grid">
+
+        <article class="proj">
+          <p class="when">Oct 2026</p>
+          <h3>SYNAPSE</h3>
+          <p>A multi-agent research intelligence platform that analyzes papers, compares methods, finds research gaps, and flags contradictions, with source-level citation checks.</p>
+          <div class="proj-btns">
+            <button type="button" class="btn solid sm js-preview" data-title="SYNAPSE">Preview</button>
+            <a class="btn line sm js-open" href="YOUR-SYNAPSE-LINK" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <article class="proj">
+          <p class="when">Nov 2026</p>
+          <h3>Saurashtra Lingua</h3>
+          <p>A digital toolkit for preserving the Saurashtra language: transliteration between Latin, Saurashtra, and Tamil, a searchable dictionary, and a virtual keyboard.</p>
+          <div class="proj-btns">
+            <button type="button" class="btn solid sm js-preview" data-title="Saurashtra Lingua">Preview</button>
+            <a class="btn line sm js-open" href="YOUR-SAURASHTRA-LINK" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <article class="proj">
+          <p class="when">Oct 2026</p>
+          <h3>ORBITAL-X</h3>
+          <p>A cognitive digital twin dashboard that combines live weather data with GEO satellite link models to estimate rain-related signal loss and link reliability.</p>
+          <div class="proj-btns">
+            <button type="button" class="btn solid sm js-preview" data-title="ORBITAL-X">Preview</button>
+            <a class="btn line sm js-open" href="YOUR-ORBITALX-LINK" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <article class="proj">
+          <p class="when">Nov 2026</p>
+          <h3>CLEARPATH</h3>
+          <p>An explainable credit underwriting tool. Upload a CSV or Excel file, calculate disposable cash and loan installments, and compare scenarios. It runs entirely in your browser, so no data is uploaded.</p>
+          <div class="proj-btns">
+            <button type="button" class="btn solid sm js-preview" data-title="CLEARPATH">Preview</button>
+            <a class="btn line sm js-open" href="YOUR-CLEARPATH-LINK" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <article class="proj">
+          <p class="when">Nov 2026</p>
+          <h3>ShopLedger</h3>
+          <p>A cloud-based ledger for small shops to record customer credit and payments, with secure sign-in and access from any device instead of paper books.</p>
+          <div class="proj-btns">
+            <button type="button" class="btn solid sm js-preview" data-title="ShopLedger">Preview</button>
+            <a class="btn line sm js-open" href="YOUR-SHOPLEDGER-LINK" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <article class="proj">
+          <p class="when">Nov 2024 – Nov 2026</p>
+          <h3>ToDoo and YmiRa</h3>
+          <p>Platforms for social innovation. ToDoo is a community platform for sharing ideas on clean surroundings, organic crops, and health awareness.</p>
+          <div class="proj-btns">
+            <button type="button" class="btn solid sm js-preview" data-title="ToDoo and YmiRa">Preview</button>
+            <a class="btn line sm js-open" href="https://www.ymira.in" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <article class="proj">
+          <p class="when">Jan – Jun 2025</p>
+          <h3>Cognitive Digital Twinning</h3>
+          <p>An AI framework that builds digital representations of cognitive and behavioral patterns for personalized analysis and support.</p>
+          <div class="proj-btns">
+            <button type="button" class="btn solid sm js-preview" data-title="Cognitive Digital Twinning">Preview</button>
+            <a class="btn line sm js-open" href="YOUR-CDT-LINK" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <article class="proj">
+          <p class="when">Oct 2024 – Present</p>
+          <h3>VR chatbot for autism support</h3>
+          <p>Real-time behavioral monitoring for over 100 people with autism and intellectual disabilities, with emotional support, personalized interventions, and social skill practice.</p>
+        </article>
+
+        <article class="proj">
+          <p class="when">2026 – Present</p>
+          <h3>AI-based digital phenotyping</h3>
+          <p>Multimodal behavioral pattern recognition and predictive analysis for neurodivergent individuals, aimed at personalized, data-driven support.</p>
+        </article>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<dialog id="pv" aria-label="Project preview">
+  <div class="pv-bar">
+    <span class="pv-title" id="pvTitle">Preview</span>
+    <span class="pv-hint">Blank? That site blocks embedding. Use Open in new tab.</span>
+    <a class="btn line sm" id="pvOpen" href="#" target="_blank" rel="noopener">Open in new tab</a>
+    <button type="button" class="btn solid sm" id="pvClose">Close</button>
+  </div>
+  <iframe class="pv-frame" id="pvFrame" title="Project preview" loading="lazy" referrerpolicy="no-referrer"></iframe>
+</dialog>
 
   <section id="certifications">
   <div class="wrap sec">
@@ -1268,5 +1395,24 @@ html[data-theme="dark"] .theme-btn svg{transform:rotate(360deg)}
 })();
 </script>
 
+<script>
+/* Project preview modal */
+(function () {
+  var dlg = document.getElementById('pv'); if (!dlg || !dlg.showModal) return;
+  var frame = document.getElementById('pvFrame'), title = document.getElementById('pvTitle'), open = document.getElementById('pvOpen');
+  function close() { dlg.close(); }
+  [].forEach.call(document.querySelectorAll('.js-preview'), function (b) {
+    b.addEventListener('click', function () {
+      var url = b.closest('.proj').querySelector('.js-open').href;
+      title.textContent = b.getAttribute('data-title');
+      open.href = url; frame.src = url; dlg.showModal();
+    });
+  });
+  document.getElementById('pvClose').addEventListener('click', close);
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) close(); });
+  dlg.addEventListener('close', function () { frame.src = 'about:blank'; });
+})();
+</script>
+  
 </body>
 </html>
